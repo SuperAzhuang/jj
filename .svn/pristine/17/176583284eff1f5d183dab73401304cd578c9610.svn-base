@@ -1,0 +1,41 @@
+package com.feihua.jjcb.phone.fragment;
+
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
+
+import com.feihua.jjcb.phone.Adapter.YHCXViewPagerAdapter;
+import com.feihua.jjcb.phone.R;
+import com.feihua.jjcb.phone.constants.Constants;
+import com.feihua.jjcb.phone.utils.SharedPreUtils;
+import com.feihua.jjcb.phone.view.NoScrollViewPager;
+
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * 欠费查询
+ * Created by wcj on 2016-03-02.
+ */
+public class QFCXfragment extends YHCXfragment
+{
+
+    public void setHeadTitle()
+    {
+        tvTitleRight.setText("用户查询");
+        tvTitleLeft.setText("区域查询");
+    }
+
+    public void initList()
+    {
+        fragmentDatas = new ArrayList<>();
+        fragmentDatas.add(new QYQueryFragment());
+        fragmentDatas.add(new YHQueryFragment());
+    }
+
+}

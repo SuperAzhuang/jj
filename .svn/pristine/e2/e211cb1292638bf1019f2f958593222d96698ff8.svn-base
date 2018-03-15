@@ -1,0 +1,61 @@
+package com.feihua.jjcb.phone.bean;
+
+/**
+ * Created by wcj on 2016-03-31.
+ */
+public class DetailsBean
+{
+    private int iconId;
+    private String name;
+    private String content;
+    private int iconMoreId;
+    private String nameMore;
+    private String contentMore;
+
+    public DetailsBean(int iconId, String name, String content)
+    {
+        this.iconId = iconId;
+        this.name = name;
+        this.content = content;
+    }
+
+    public DetailsBean(int iconId, String name, String content, int iconMoreId, String nameMore, String contentMore)
+    {
+        this.iconId = iconId;
+        this.name = name;
+        this.content = content;
+        this.iconMoreId = iconMoreId;
+        this.nameMore = nameMore;
+        this.contentMore = contentMore;
+    }
+
+    public int getIconId()
+    {
+        return iconId;
+    }
+
+    public String getName()
+    {
+        return name;
+    }
+
+    public String getContent()
+    {
+        return content;
+    }
+
+    public int getIconMoreId()
+    {
+        return iconMoreId;
+    }
+
+    public String getNameMore()
+    {
+        return nameMore;
+    }
+
+    public String getContentMore()
+    {
+        return contentMore;
+    }
+}

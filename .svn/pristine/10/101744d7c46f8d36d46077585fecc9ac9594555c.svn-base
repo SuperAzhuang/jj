@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="@drawable/bg_dialog"
+              android:orientation="vertical"
+              android:padding="15dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="10dp"
+        android:text="下载表册清单"
+        android:textColor="@color/text_defult_color_grey"
+        android:textSize="20sp"
+        />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/text_defult_color_grey"></View>
+
+    <TextView
+        android:id="@+id/tv_dialog_cehao"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/bg_dialog_tv"
+        android:gravity="center_vertical|left"
+        android:text="2012-10"
+        android:textColor="@color/text_default"
+        android:textSize="18sp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_dialog_confirm"
+            style="@style/btn_dialog_green"
+            android:text="@string/confirm"
+            />
+
+        <Button
+            android:id="@+id/btn_dialog_cancel"
+            style="@style/btn_dialog_red"
+            android:layout_marginLeft="15dp"
+            android:text="@string/cancel"
+            />
+    </LinearLayout>
+</LinearLayout>

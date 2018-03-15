@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:gravity="center_horizontal"
+              android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20px">
+
+        <LinearLayout
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingBottom="10px"
+                android:paddingLeft="15px"
+                android:paddingRight="7px"
+                android:paddingTop="5px">
+
+                <TextView
+                    style="@style/tv_tjcx_text_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="所属区域:"/>
+
+                <Spinner
+                    android:id="@+id/spinnerQy"
+                    style="@style/spinner_custom"
+                    android:background="@drawable/img_tjcx_spinner_bg"
+                    android:scrollbars="none"
+                    android:spinnerMode="dropdown"/>
+
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingBottom="10px"
+                android:paddingLeft="7px"
+                android:paddingRight="15px"
+                android:paddingTop="5px">
+
+                <TextView
+                    style="@style/tv_tjcx_text_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="年　　月:"/>
+
+                <TextView
+                    android:id="@+id/tvDate"
+                    style="@style/spinner_custom"
+                    android:layout_marginLeft="5px"
+                    android:background="@drawable/img_tjcx_spinner_bg"
+                    android:paddingLeft="15px"/>
+
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btnQuery"
+        android:layout_width="360px"
+        android:layout_height="60px"
+        android:layout_marginTop="20px"
+        android:background="@drawable/btn_yellow"
+        android:text="查　　询"
+        android:textColor="@color/white"
+        android:textSize="34px"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="70px"
+        android:layout_marginTop="20px"
+        android:background="#e89800"
+        android:gravity="center_vertical">
+
+        <TextView
+            style="@style/tv_tjcx_text_title"
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:gravity="center"
+            android:text="片区"/>
+
+
+        <TextView
+            style="@style/tv_tjcx_text_title"
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:gravity="center"
+            android:text="居民生活"/>
+
+        <TextView
+            style="@style/tv_tjcx_text_title"
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:gravity="center"
+            android:text="经营"/>
+
+        <TextView
+            style="@style/tv_tjcx_text_title"
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:gravity="center"
+            android:text="非经营"/>
+
+        <TextView
+            style="@style/tv_tjcx_text_title"
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:gravity="center"
+            android:text="欠费总额"/>
+
+
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/lvQYQuery"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </ListView>
+
+
+</LinearLayout>

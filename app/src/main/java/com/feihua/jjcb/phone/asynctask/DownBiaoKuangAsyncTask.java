@@ -1,0 +1,80 @@
+package com.feihua.jjcb.phone.asynctask;
+
+import android.content.ContentValues;
+import android.content.Context;
+import android.os.AsyncTask;
+import android.util.Log;
+
+import com.feihua.jjcb.phone.R;
+import com.feihua.jjcb.phone.bean.BiaoKuangBean;
+import com.feihua.jjcb.phone.bean.Datadic;
+import com.feihua.jjcb.phone.callback.BiaoCeTables;
+import com.feihua.jjcb.phone.callback.ChaoBiaoTables;
+import com.feihua.jjcb.phone.callback.DownTables;
+import com.feihua.jjcb.phone.constants.Constants;
+import com.feihua.jjcb.phone.db.BiaoCeDatabase;
+import com.feihua.jjcb.phone.db.BiaoKuangDatabase;
+import com.feihua.jjcb.phone.db.ChaoBiaoDatabase;
+import com.feihua.jjcb.phone.db.DatabaseHelper;
+import com.feihua.jjcb.phone.utils.L;
+import com.feihua.jjcb.phone.utils.SharedPreUtils;
+import com.google.gson.Gson;
+
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * Created by wcj on 2016-04-18.
+ */
+public abstract class DownBiaoKuangAsyncTask extends AsyncTask<String, Void, String>
+{
+    private Context ctx;
+    private BiaoKuangDatabase biaoKDatabase;
+
+    public DownBiaoKuangAsyncTask(Context ctx)
+    {
+        this.ctx = ctx;
+        biaoKDatabase = new BiaoKuangDatabase(ctx);
+    }
+
+    @Override
+    protected String doInBackground(String... params)
+    {
+        String content = null;
+        if (params[0] != null)
+        {
+            content = saveDatas(params[0]);
+        }
+
+        return content;
+    }
+
+    //保存已下载成功的数据到数据库
+    private String saveDatas(String datas)
+    {
+        BiaoKuangBean bean = new Gson().fromJson(datas, BiaoKuangBean.class);
+        L.w("DownBiaoKuangAsyncTask", "开始表况存储");
+        List<Datadic> bkList = bean.BK;
+        L.w("DownBiaoKuangAsyncTask", "bkList.size() = " + bkList.size());
+        //表册
+        if (bkList == null || bkList.size() == 0)
+        {
+            return ctx.getResources().getString(R.string.down_biaokuang_not);
+        }
+
+        if (biaoKDatabase.queryCount(DatabaseHelper.BIAOK_TABLE_NAME) > 0)
+        {
+            biaoKDatabase.delete(DatabaseHelper.BIAOK_TABLE_NAME);
+        }
+
+        for (Datadic bk : bkList)
+        {
+            ContentValues values = new ContentValues();
+            values.put(DatabaseHelper.WATER_BK, bk.getDatadic_name());
+            values.put(DatabaseHelper.IS_CBWAY, bk.getDatadic_value());
+            biaoKDatabase.insert(DatabaseHelper.BIAOK_TABLE_NAME, values);
+        }
+        L.w("DownBiaoKuangAsyncTask", "表况存储完成");
+        return ctx.getResources().getString(R.string.down_biaokuang_success);
+    }
+}

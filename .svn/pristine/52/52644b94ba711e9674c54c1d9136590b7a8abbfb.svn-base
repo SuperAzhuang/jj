@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@mipmap/bg_login"
+    android:orientation="vertical"
+    tools:context="com.feihua.jjcb.phone.MainActivity">
+
+
+    <FrameLayout
+        android:id="@+id/fl_main"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"></FrameLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/white"/>
+
+    <RadioGroup
+        android:id="@+id/indicator_group"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/main_cbgl"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:button="@null"
+            android:checked="false"
+            android:drawableTop="@drawable/radio_check1"
+            android:gravity="center|bottom"
+            android:paddingBottom="3dp"
+            android:paddingLeft="0dp"
+            android:paddingTop="3dp"
+            android:text="@string/main_cbgl"
+            android:textColor="@color/white"
+            android:textSize="10sp"/>
+
+        <RadioButton
+            android:id="@+id/main_yhcx"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:button="@null"
+            android:drawableTop="@drawable/radio_check2"
+            android:gravity="center|bottom"
+            android:paddingBottom="3dp"
+            android:paddingLeft="0dp"
+            android:paddingTop="3dp"
+            android:text="@string/main_yhcx"
+            android:textColor="@color/white"
+            android:textSize="10sp"/>
+
+        <RadioButton
+            android:id="@+id/main_qfcx"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:button="@null"
+            android:drawableTop="@drawable/radio_check3"
+            android:gravity="center|bottom"
+            android:paddingBottom="3dp"
+            android:paddingLeft="0dp"
+            android:paddingTop="3dp"
+            android:text="@string/main_qfcx"
+            android:textColor="@color/white"
+            android:textSize="10sp"/>
+
+        <RadioButton
+            android:id="@+id/main_bzcx"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:button="@null"
+            android:drawableTop="@drawable/radio_check4"
+            android:gravity="center|bottom"
+            android:paddingBottom="3dp"
+            android:paddingLeft="0dp"
+            android:paddingTop="3dp"
+            android:text="@string/main_bzcx"
+            android:textColor="@color/white"
+            android:textSize="10sp"/>
+
+        <RadioButton
+            android:id="@+id/main_user"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:button="@null"
+            android:drawableTop="@drawable/radio_check5"
+            android:gravity="center|bottom"
+            android:paddingBottom="3dp"
+            android:paddingLeft="0dp"
+            android:paddingTop="3dp"
+            android:text="@string/main_user"
+            android:textColor="@color/white"
+            android:textSize="10sp"/>
+    </RadioGroup>
+
+</LinearLayout>

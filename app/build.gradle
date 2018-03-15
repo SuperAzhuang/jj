@@ -1,0 +1,42 @@
+apply plugin: 'com.android.application'
+apply plugin: 'com.neenbedankt.android-apt'
+// jjcb_jd
+android {
+    compileSdkVersion 23
+    buildToolsVersion '25.0.0'
+    defaultConfig {
+        applicationId "com.feihua.jjcb.phone"
+        minSdkVersion 15
+        targetSdkVersion 22
+        versionCode 29
+        versionName '1.0.29'
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    productFlavors {
+    }
+}
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    testCompile 'junit:junit:4.12'
+    compile files('libs/universal-image-loader-1.9.4-SNAPSHOT.jar')
+    compile 'com.android.support:appcompat-v7:23.1.1'
+    compile 'com.google.code.gson:gson:2.3.1'
+    compile 'com.zhy:autolayout:1.4.3'
+    compile 'com.squareup.okhttp3:okhttp:3.3.1'
+    compile 'com.zhy:okhttputils:2.5.2'
+    compile 'com.android.support:design:23.1.1'
+    apt 'com.zhy:mpermission-compiler:1.0.0'
+    compile 'com.zhy:mpermission-api:1.0.0'
+    compile files('libs/locSDK_6.13.jar')
+    compile 'com.google.android.gms:play-services-appindexing:8.1.0'
+    compile files('libs/BaiduLBS_Android.jar')
+    compile files('libs/Msc.jar')
+    compile files('libs/BaiduNaviSDK_3.2.0.jar')
+    compile files('libs/BaiduTraceSDK_v2_1_15.jar')
+}

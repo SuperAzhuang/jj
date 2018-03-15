@@ -1,0 +1,47 @@
+package com.feihua.jjcb.phone.callback;
+
+import android.util.Log;
+
+import com.google.gson.Gson;
+import com.zhy.http.okhttp.callback.Callback;
+
+import org.json.JSONObject;
+
+import okhttp3.Call;
+import okhttp3.Response;
+
+/**
+ * Created by wcj on 2016-03-29.
+ */
+public abstract class UserCallback extends Callback<User>
+{
+
+    @Override
+    public User parseNetworkResponse(Response response) throws Exception
+    {
+        String content = response.body().string();
+        Log.w("UserCallback", "content" + content);
+        DataInfo dataInfo = new Gson().fromJson(content, DataInfo.class);
+        User user = null;
+        if (dataInfo.success)
+        {
+            JSONObject jsonObject = new JSONObject(content);
+            JSONObject obj = jsonObject.getJSONObject("obj");
+            user = new Gson().fromJson(obj.toString(), User.class);
+        }
+        else
+        {
+            onNetworkError(false,dataInfo.msg);
+        }
+        return user;
+    }
+
+    @Override
+    public void onError(Call call, Exception e)
+    {
+        onNetworkError(true,e.getMessage());
+    }
+
+    public abstract void onNetworkError(boolean isNetwork,String error);
+
+}

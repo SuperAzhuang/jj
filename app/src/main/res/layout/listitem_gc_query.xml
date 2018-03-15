@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="210px"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0px"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0px"
+                android:layout_weight="1"
+                android:background="@drawable/btn_gccx_layout_bg"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/layoutItem1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tvStart"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="15px"
+                        android:text="开始"
+                        android:textColor="#000000"
+                        android:textSize="34px"/>
+
+                    <ImageView
+                        android:id="@+id/imgStart"
+                        android:layout_width="55px"
+                        android:layout_height="90px"
+                        android:scaleType="fitXY"
+                        android:src="@mipmap/img_start"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/layoutItem2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="15px"
+                    android:paddingRight="15px"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
+                        android:text="－报装申请－"
+                        android:layout_marginBottom="10px"
+                        android:textSize="28px"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="24px"
+                        android:text="处理人:庄肯定"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="24px"
+                        android:text="审核意见:通过"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="24px"
+                        android:text="审核日期:2016-02-18"/>
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/imgArrowsDown"
+                android:layout_width="40px"
+                android:layout_height="35px"
+                android:layout_marginTop="10px"
+                android:src="@mipmap/img_arrows_down_normal"/>
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/imgArrowsHorizontal"
+            android:layout_width="35px"
+            android:layout_height="40px"
+            android:layout_marginBottom="30px"
+            android:layout_marginLeft="10px"
+            android:src="@mipmap/img_arrows_right_normal"/>
+
+    </LinearLayout>
+
+</LinearLayout>

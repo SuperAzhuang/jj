@@ -1,0 +1,150 @@
+package com.feihua.jjcb.phone;
+
+import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.widget.FrameLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+
+import com.feihua.jjcb.phone.application.Constants;
+import com.feihua.jjcb.phone.fragment.BZCXfragment;
+import com.feihua.jjcb.phone.fragment.CBGLfragment;
+import com.feihua.jjcb.phone.fragment.QFCXfragment;
+import com.feihua.jjcb.phone.fragment.UserFragment;
+import com.feihua.jjcb.phone.fragment.YHCXfragment;
+import com.feihua.jjcb.phone.utils.SharedPreUtils;
+import com.feihua.jjcb.phone.utils.StringUtils;
+
+public class MainActivity extends FragmentActivity implements RadioGroup.OnCheckedChangeListener
+{
+
+    private RadioGroup rgroup_main;
+    private FrameLayout fl_main;
+    private RadioButton main_cbgl;
+    private RadioButton main_yhcx;
+    private RadioButton main_qfcx;
+    private RadioButton main_bzcx;
+    private RadioButton main_user;
+    private Fragment mCurrentFragment;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState)
+    {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        initView();
+    }
+
+    private void initView()
+    {
+        fl_main = (FrameLayout) findViewById(R.id.fl_main);
+        main_cbgl = (RadioButton) findViewById(R.id.main_cbgl);
+        main_yhcx = (RadioButton) findViewById(R.id.main_yhcx);
+        main_qfcx = (RadioButton) findViewById(R.id.main_qfcx);
+        main_bzcx = (RadioButton) findViewById(R.id.main_bzcx);
+        main_user = (RadioButton) findViewById(R.id.main_user);
+        rgroup_main = (RadioGroup) findViewById(R.id.indicator_group);
+        rgroup_main.setOnCheckedChangeListener(this);
+        rgroup_main.check(main_user.getId());
+    }
+
+    @Override
+    public void onCheckedChanged(RadioGroup group, int checkedId)
+    {
+        switch (checkedId)
+        {
+            case R.id.main_user:
+                switchCenter(UserFragment.class);
+                break;
+            case R.id.main_bzcx:
+                switchCenter(BZCXfragment.class);
+                break;
+            case R.id.main_qfcx:
+                switchCenter(QFCXfragment.class);
+                break;
+            case R.id.main_yhcx:
+                switchCenter(YHCXfragment.class);
+                break;
+            case R.id.main_cbgl:
+                switchCenter(CBGLfragment.class);
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void switchCenter(Class<? extends Fragment> clazz)
+    {
+        FragmentManager fm = getSupportFragmentManager();
+        FragmentTransaction ft = fm.beginTransaction();
+        Fragment userfragment = fm.findFragmentByTag(clazz.getName());
+        if (mCurrentFragment == null)
+        {//解决FC后出现的重叠显示页面的BUG
+            String lastfragment = SharedPreUtils.getString(Constants.LAST_FRAGMENT, this);
+            if (!StringUtils.isEmpty2(lastfragment))
+            {
+                mCurrentFragment = fm.findFragmentByTag(getLastClass(lastfragment).getName());
+            }
+        }
+        if (userfragment == null)
+        {
+            try
+            {
+                userfragment = clazz.newInstance();
+            }
+            catch (InstantiationException e)
+            {
+                e.printStackTrace();
+            }
+            catch (IllegalAccessException e)
+            {
+                e.printStackTrace();
+            }
+        }
+        if (mCurrentFragment != null && mCurrentFragment != userfragment)
+        {
+            ft.hide(mCurrentFragment);
+        }
+        if (userfragment != null)
+        {
+            if (!userfragment.isAdded())
+            {
+                ft.add(R.id.fl_main, userfragment, clazz.getName());
+            }
+            else
+            {
+                ft.show(userfragment);
+            }
+        }
+        ft.commitAllowingStateLoss();
+        mCurrentFragment = userfragment;
+    }
+
+    private Class<? extends Fragment> getLastClass(String lastfragment)
+    {
+        if ("CBGLfragment".equals(lastfragment))
+        {
+            return CBGLfragment.class;
+        }
+        else if ("UserFragment".equals(lastfragment))
+        {
+            return UserFragment.class;
+        }
+        else if ("YHCXfragment".equals(lastfragment))
+        {
+            return YHCXfragment.class;
+        }
+        else if ("QFCXfragment".equals(lastfragment))
+        {
+            return QFCXfragment.class;
+        }
+        else
+        {
+            return BZCXfragment.class;
+        }
+    }
+}

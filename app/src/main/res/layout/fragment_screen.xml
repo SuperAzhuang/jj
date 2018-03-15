@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@mipmap/bg_login"
+              android:clickable="true"
+              android:divider="@drawable/line_white"
+              android:orientation="vertical"
+              android:showDividers="middle">
+
+    <LinearLayout
+        android:id="@+id/layoutScreenItem1"
+        android:layout_width="match_parent"
+        android:layout_height="90px"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:clickable="true"
+        android:paddingLeft="50px"
+        android:paddingRight="150px">
+
+        <RadioButton
+            android:id="@+id/rbScreenItem1"
+            style="@style/rb_customer_details"
+            android:checked="true"
+            android:text="户　　号"/>
+
+        <EditText
+            android:id="@+id/etScreenHh"
+            android:layout_width="match_parent"
+            android:layout_height="60px"
+            android:layout_marginLeft="20px"
+            android:background="@drawable/et_white"
+            android:paddingLeft="10px"
+            android:paddingRight="10px"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layoutScreenItem2"
+        android:layout_width="match_parent"
+        android:layout_height="90px"
+        android:clickable="true"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="50px"
+        android:paddingRight="150px">
+
+
+        <RadioButton
+            android:id="@+id/rbScreenItem2"
+            style="@style/rb_customer_details"
+            android:checked="false"
+            android:text="表　　况"/>
+
+        <Spinner
+            android:id="@+id/spinner_bk"
+            android:layout_width="match_parent"
+            android:layout_height="60px"
+            android:layout_marginLeft="20px"
+            android:background="@mipmap/bg_spinner"
+            android:gravity="center"
+            android:scrollbars="none"
+            android:spinnerMode="dialog"
+            ></Spinner>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layoutScreenItem3"
+        android:layout_width="match_parent"
+        android:layout_height="90px"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="50px"
+        android:clickable="true"
+        android:paddingRight="150px">
+
+        <RadioButton
+            android:id="@+id/rbScreenItem3"
+            style="@style/rb_customer_details"
+            android:checked="false"
+            android:text="抄表状态"/>
+
+        <Spinner
+            android:id="@+id/spinnerState"
+            android:layout_width="match_parent"
+            android:layout_height="60px"
+            android:layout_marginLeft="20px"
+            android:background="@mipmap/bg_spinner"
+            android:gravity="center"
+            android:spinnerMode="dropdown"
+            ></Spinner>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0px"
+        android:layout_weight="1"
+        android:gravity="bottom"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/btnCommit"
+            android:layout_width="match_parent"
+            android:layout_height="90px"
+            android:background="#e89800"
+            android:text="提　交"
+            android:textColor="@color/white"
+            android:textSize="34px"/>
+
+    </LinearLayout>
+
+</LinearLayout>

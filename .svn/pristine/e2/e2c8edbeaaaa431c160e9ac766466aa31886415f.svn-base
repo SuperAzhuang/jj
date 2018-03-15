@@ -1,0 +1,586 @@
+package com.feihua.jjcb.phone.fragment;
+
+
+import android.app.Dialog;
+import android.content.ContentValues;
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.text.Editable;
+import android.text.TextUtils;
+import android.text.TextWatcher;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.Spinner;
+import android.widget.TextView;
+
+import com.amap.api.location.AMapLocation;
+import com.amap.api.location.AMapLocationClient;
+import com.amap.api.location.AMapLocationClientOption;
+import com.amap.api.location.AMapLocationListener;
+import com.feihua.jjcb.phone.Adapter.CBGLDetailsListAdapter;
+import com.feihua.jjcb.phone.R;
+import com.feihua.jjcb.phone.bean.BiaoKuangBean;
+import com.feihua.jjcb.phone.bean.Datadic;
+import com.feihua.jjcb.phone.bean.DetailsBean;
+import com.feihua.jjcb.phone.callback.BiaoCeTables;
+import com.feihua.jjcb.phone.callback.ChaoBiaoTables;
+import com.feihua.jjcb.phone.callback.NotObjCommonCallback;
+import com.feihua.jjcb.phone.constants.Constants;
+import com.feihua.jjcb.phone.db.BiaoCeDatabase;
+import com.feihua.jjcb.phone.db.BiaoKuangDatabase;
+import com.feihua.jjcb.phone.db.ChaoBiaoDatabase;
+import com.feihua.jjcb.phone.db.DatabaseHelper;
+import com.feihua.jjcb.phone.ui.CBGLDetailsActivity;
+import com.feihua.jjcb.phone.ui.ErrorReportActivity;
+import com.feihua.jjcb.phone.utils.DateUtil;
+import com.feihua.jjcb.phone.utils.DensityUtil;
+import com.feihua.jjcb.phone.utils.LocationUtils;
+import com.feihua.jjcb.phone.utils.SharedPreUtils;
+import com.feihua.jjcb.phone.utils.StringUtils;
+import com.feihua.jjcb.phone.utils.ToastUtil;
+import com.feihua.jjcb.phone.view.ProgressDialogBar;
+import com.zhy.http.okhttp.OkHttpUtils;
+import com.zhy.http.okhttp.callback.Callback;
+
+import java.util.ArrayList;
+import java.util.Date;
+
+import okhttp3.Call;
+import okhttp3.Response;
+
+/**
+ * Created by wcj on 2016-03-31.
+ */
+public class CBGLDetailsFragment extends BaseFragment implements View.OnClickListener, TextWatcher, AMapLocationListener
+{
+
+    private String userbKh;
+    private String volumeNo;
+    private ChaoBiaoTables tables;
+    private ListView mLvCustomerDetails;
+    private ArrayList<DetailsBean> datas;
+    private CBGLDetailsListAdapter adapter;
+    private ChaoBiaoDatabase chaoBiaoDatabase;
+    private BiaoCeDatabase biaoCeDatabase;
+    private View mFootview;
+    private TextView tvYield;
+    private EditText etCheckCode;
+    private TextView tvSQDS;
+    private TextView tvLocation;
+    private AMapLocationClient locationClient = null;
+    private AMapLocationClientOption locationOption = null;
+    private String volumeMcount;
+    private String IS_CBWAY = "1";
+    private Spinner spinnerBk;
+    private BiaoKuangDatabase biaoKuangDatabase;
+    private ArrayList<Datadic> datadicsList;
+    private ArrayList<String> waterBkList;
+    private String WATER_BK;
+    private int spinnerIndex;
+
+    @Override
+    public int getLayoutId()
+    {
+        return R.layout.fragment_cbgl_dtails;
+    }
+
+    @Override
+    public void initList()
+    {
+        initLocation();
+        biaoCeDatabase = new BiaoCeDatabase(ctx);
+        biaoKuangDatabase = new BiaoKuangDatabase(ctx);
+
+        datas = new ArrayList<>();
+        chaoBiaoDatabase = new ChaoBiaoDatabase(ctx);
+        tables = chaoBiaoDatabase.DeptArrayOne(volumeNo, userbKh);
+        datas.add(new DetailsBean(R.mipmap.icon_details_c1, "户号:", tables.getUSERB_KH(), R.mipmap.icon_details_c12, "表号:", tables.getWATERM_NO()));
+        datas.add(new DetailsBean(R.mipmap.icon_details_c17, "户名:", tables.getUSERB_HM()));
+        datas.add(new DetailsBean(R.mipmap.icon_details_c2, "地址:", tables.getUSERB_ADDR()));
+        datas.add(new DetailsBean(R.mipmap.icon_details_c3, "电话:", tables.getUSERB_DH(), R.mipmap.icon_details_c4, "手机:", tables.getUSERB_MT()));
+        datas.add(new DetailsBean(R.mipmap.icon_details_c5, "口径:", tables.getMETERC_CALIBRE(), R.mipmap.icon_details_c18, "表型:", tables.getWATERM_TYPE()));
+        datas.add(new DetailsBean(R.mipmap.icon_details_c7, "用水性质:", tables.getWATERT_NAME(), R.mipmap.icon_details_c8, "水价:", tables.getUSERB_CUP()));
+        datas.add(new DetailsBean(R.mipmap.icon_details_c9, "安装日期:", tables.getWATERM_AZRQ()));
+        datas.add(new DetailsBean(R.mipmap.icon_details_c10, "换表日期:", tables.getWATERM_REPDATE()));
+
+        datadicsList = biaoKuangDatabase.DeptArrayAll();
+        waterBkList = new ArrayList<>();
+        for (int i = 0; i < datadicsList.size(); i++)
+        {
+            if (tables.getWATER_BK().equals(datadicsList.get(i).getDatadic_value())){
+                spinnerIndex = i;
+            }
+            waterBkList.add(datadicsList.get(i).getDatadic_name());
+        }
+        WATER_BK = datadicsList.get(0).getDatadic_value();
+        IS_CBWAY = tables.getIS_CBWAY();
+    }
+
+    private void initLocation()
+    {
+        locationClient = new AMapLocationClient(getActivity().getApplicationContext());
+        locationOption = new AMapLocationClientOption();
+        // 设置定位模式为高精度模式
+        locationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
+        // 设置定位监听
+        locationClient.setLocationListener(this);
+        // 设置是否需要显示地址信息
+        locationOption.setNeedAddress(false);
+        //设置是否只定位一次,默认为false
+        locationOption.setOnceLocation(true);
+        /**
+         * 设置是否优先返回GPS定位结果，如果30秒内GPS没有返回定位结果则进行网络定位
+         * 注意：只有在高精度模式下的单次定位有效，其他方式无效
+         */
+        //        locationOption.setGpsFirst(true);
+        // 设置定位参数
+        locationClient.setLocationOption(locationOption);
+    }
+
+    @Override
+    public void initViews(View layout)
+    {
+        RadioGroup mRadioGroup = (RadioGroup) layout.findViewById(R.id.rgChaoBiaoState);
+        RadioButton rbShiChao = (RadioButton) layout.findViewById(R.id.rbShiChao);
+        RadioButton rbGuChao = (RadioButton) layout.findViewById(R.id.rbGuChao);
+        mRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener()
+        {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId)
+            {
+                switch (checkedId)
+                {
+                    case R.id.rbShiChao:
+                        IS_CBWAY = "1";
+                        break;
+                    case R.id.rbGuChao:
+                        IS_CBWAY = "0";
+                        break;
+                    default:
+                        break;
+                }
+                Log.w("CBGLDetailsFragment","IS_CBWAY = " + IS_CBWAY);
+            }
+        });
+        if (tables.getIS_CBWAY().equals("1")){
+            rbShiChao.setChecked(true);
+        }else{
+            rbGuChao.setChecked(true);
+        }
+
+        spinnerBk = (Spinner) layout.findViewById(R.id.spinner_bk);
+        ArrayAdapter spinnerAdapter = new ArrayAdapter<String>(ctx, android.R.layout.simple_spinner_item, waterBkList);
+        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerBk.setAdapter(spinnerAdapter);
+        spinnerBk.setSelection(spinnerIndex);
+        spinnerBk.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
+        {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
+            {
+                WATER_BK = datadicsList.get(position).getDatadic_value();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent)
+            {
+
+            }
+        });
+
+        mLvCustomerDetails = (ListView) layout.findViewById(R.id.lv_customer_details);
+        adapter = new CBGLDetailsListAdapter(ctx, datas, R.layout.listitem_cbgl_details);
+        mLvCustomerDetails.setAdapter(adapter);
+        mFootview = layout.findViewById(R.id.layoutFootView);
+        layout.findViewById(R.id.btn_save).setOnClickListener(this);
+        layout.findViewById(R.id.btn_error_report).setOnClickListener(this);
+        layout.findViewById(R.id.btn_updata).setOnClickListener(this);
+
+        mFootview.findViewById(R.id.btnGetLocation).setOnClickListener(this);
+        tvYield = (TextView) mFootview.findViewById(R.id.tvYield);
+        tvSQDS = (TextView) mFootview.findViewById(R.id.tvSQDS);
+        tvLocation = (TextView) mFootview.findViewById(R.id.tvLocation);
+        etCheckCode = (EditText) mFootview.findViewById(R.id.etCheckCode);
+        etCheckCode.addTextChangedListener(this);
+
+
+        tvSQDS.setText(tables.USERB_SQDS);
+        etCheckCode.setText(tables.WATERM_CHECK_CODE);
+        tvYield.setText(tables.WATERM_YIELD);
+        if (StringUtils.isEmpty(tables.GPS))
+        {
+            tvLocation.setText("");
+        }
+        else
+        {
+            tvLocation.setText(tables.GPS);
+        }
+    }
+
+
+    public void setUserbKh(String volumeNo, String userbKh, String volumeMcount)
+    {
+        this.volumeNo = volumeNo;
+        this.userbKh = userbKh;
+        this.volumeMcount = volumeMcount;
+    }
+
+    @Override
+    public void onClick(View v)
+    {
+        switch (v.getId())
+        {
+            case R.id.btn_save:
+                onclickSave(false);
+                break;
+            case R.id.btnGetLocation:
+                getLocation();
+                break;
+            case R.id.btn_updata:
+                onclickSave(true);
+                break;
+            case R.id.btn_error_report:
+                onClickAbnormal();
+                break;
+
+        }
+    }
+
+    private void onClickAbnormal()
+    {
+        String location = tvLocation.getText().toString();
+        Intent intent = new Intent(ctx, ErrorReportActivity.class);
+        intent.putExtra("location", location);
+        intent.putExtra("USERB_KH", tables.getUSERB_KH());
+        intent.putExtra("YEAR", tables.getWATERU_YEAR());
+        intent.putExtra("MONTH", tables.getWATERU_MONTH());
+        startActivity(intent);
+        getActivity().overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+    }
+
+    private void getLocation()
+    {
+        // 启动定位
+        locationClient.startLocation();
+        mHandler.sendEmptyMessage(LocationUtils.MSG_LOCATION_START);
+    }
+
+    private void onUpdata(boolean isUpdata)
+    {
+        tables.GPS = tvLocation.getText().toString();
+        tables.WATERM_CHECK_CODE = etCheckCode.getText().toString();
+        tables.WATERM_YIELD = tvYield.getText().toString();
+        tables.TIME = DateUtil.format(new Date());
+        tables.WATER_BK = WATER_BK;
+        tables.IS_CBWAY = IS_CBWAY;
+
+//        BiaoCeTables biaoCeTables = biaoCeDatabase.queryBiaoCeStatu(volumeNo);
+        ContentValues values = new ContentValues();
+        values.put(DatabaseHelper.CHAOBIAO_IS_SAVE, "1");
+        values.put(DatabaseHelper.CHAOBIAO_IS_UPDATA, "0");
+        values.put(DatabaseHelper.CHAOBIAO_WATERM_LOALTION, tables.getGPS());
+        values.put(DatabaseHelper.CHAOBIAO_WATERM_CHECK_CODE, tables.getWATERM_CHECK_CODE());
+        values.put(DatabaseHelper.CHAOBIAO_WATERM_YIELD, tables.getWATERM_YIELD());
+        values.put(DatabaseHelper.CHAOBIAO_TIME, tables.getTIME());
+        values.put(DatabaseHelper.CHAOBIAO_WATER_BK, tables.getWATER_BK());
+        values.put(DatabaseHelper.CHAOBIAO_IS_CBWAY, tables.getIS_CBWAY());
+        chaoBiaoDatabase.updatatable(values, userbKh);
+
+        int saveNum = chaoBiaoDatabase.queryCount(DatabaseHelper.CHAOBIAO_VOLUME_NO + "=?" + " and " + DatabaseHelper.CHAOBIAO_IS_SAVE + "=?", new String[]{volumeNo, "1"});
+        int updataNum = chaoBiaoDatabase.queryCount(DatabaseHelper.CHAOBIAO_VOLUME_NO + "=?" + " and " + DatabaseHelper.CHAOBIAO_IS_UPDATA + "=?", new String[]{volumeNo, "1"});
+        ContentValues baioceValues = new ContentValues();
+        baioceValues.put(DatabaseHelper.BIAOCE_VOLUME_UPDATA, updataNum);
+        baioceValues.put(DatabaseHelper.BIAOCE_VOLUME_SAVE, saveNum);
+        biaoCeDatabase.updatatable(baioceValues, volumeNo);
+        if (isUpdata)
+        {
+            updataServer(tables.getGPS(), tables.getWATERM_CHECK_CODE(), tables.getWATERM_YIELD(), tables.getTIME());
+        }
+        else
+        {
+            ToastUtil.showShortToast(R.string.toast_updata_save);
+            nextPage();
+        }
+    }
+
+    private void updataServer(String location, String checkCode, String yield, String time)
+    {
+        mProgressBar.setProgressMsg(getResources().getString(R.string.progress_upload_all));
+        mProgressBar.show();
+        Log.w("CBGLDetailsFragment","AREA_NO = " + tables.getAREA_NO());
+        String userId = SharedPreUtils.getString(Constants.USER_ID, ctx);
+        OkHttpUtils.post()//
+                .url(Constants.UPDATA_CBGL_DETAILSE)//
+                .addParams("RECORDER", userId)//
+                .addParams("VOLUME_NO", volumeNo)//
+                .addParams("USERB_KH", userbKh)//
+                .addParams("USERB_SQDS", tables.getUSERB_SQDS())//
+                .addParams("USERB_BQDS", checkCode)//
+                .addParams("GPS", tables.getGPS())//
+                .addParams("WATERU_QAN", yield)//
+                .addParams("THREEMON_AVG", tables.getQ3Q())//
+                .addParams("USERB_HM", tables.getUSERB_HM())//
+                .addParams("USERB_YHLX", tables.getUSERB_YHLX())//
+                .addParams("WATERU_YEAR", tables.getWATERU_YEAR())//
+                .addParams("WATERU_MONTH", tables.getWATERU_MONTH())//
+                .addParams("WATER_BK", tables.getWATER_BK())//
+                .addParams("IS_CBWAY", tables.getIS_CBWAY())//
+                .addParams("AREA_NO", tables.getAREA_NO())//
+                .build()//
+                .execute(new NotObjCommonCallback()
+                {
+                    @Override
+                    public void onNetworkError(boolean isNetwork, String error)
+                    {
+                        if (isNetwork)
+                        {
+                            ToastUtil.showShortToast(R.string.toast_network_anomalies);
+                        }
+                        else
+                        {
+                            ToastUtil.showShortToast(error);
+                        }
+                        mProgressBar.dismiss();
+                    }
+
+                    @Override
+                    public void onResponse(Boolean isSuccess)
+                    {
+                        mProgressBar.dismiss();
+                        if (isSuccess)
+                        {
+                            ToastUtil.showShortToast(R.string.toast_updata_success);
+
+                            ContentValues values = new ContentValues();
+                            values.put(DatabaseHelper.CHAOBIAO_IS_UPDATA, "1");
+                            chaoBiaoDatabase.updatatable(values, userbKh);
+
+                            int updataNum = chaoBiaoDatabase.queryCount(DatabaseHelper.CHAOBIAO_VOLUME_NO + "=?" + " and " + DatabaseHelper.CHAOBIAO_IS_UPDATA + "=?", new String[]{volumeNo, "1"});
+                            ContentValues baioceValues = new ContentValues();
+                            baioceValues.put(DatabaseHelper.BIAOCE_VOLUME_UPDATA, updataNum);
+                            biaoCeDatabase.updatatable(baioceValues, volumeNo);
+
+                            if (!TextUtils.isEmpty(volumeMcount) && updataNum == (Integer.valueOf(volumeMcount)))
+                            {
+                                updataVolscbs();
+                            }
+                            nextPage();
+                        }
+                    }
+                });
+    }
+
+    private void updataVolscbs()
+    {
+        String year = tables.getWATERU_YEAR();
+        String month = tables.getWATERU_MONTH();
+        OkHttpUtils.post()//
+                .url(Constants.UPDATA_CBGL_VOLSCBS)//
+                .addParams("VOLS_YEAR", year)//
+                .addParams("VOLS_MONTH", month)//
+                .addParams("VOLUME_NO", volumeNo)//
+                .build()//
+                .execute(new NotObjCommonCallback()
+                {
+                    @Override
+                    public void onResponse(Boolean aBoolean)
+                    {
+
+                    }
+
+                    @Override
+                    public void onNetworkError(boolean isNetwork, String error)
+                    {
+
+                    }
+                });
+    }
+
+    private void onclickSave(boolean isUpdata)
+    {
+        if (!isAbnormal(isUpdata))
+        {
+            onUpdata(isUpdata);
+        }
+    }
+
+    private void showDialog(String dialogContent, final boolean isUpdata)
+    {
+        //做两次判断，并弹出框提示1、输入值不得小于本期起码  2、水量不得多或少于前三期平均水量的30%
+        final Dialog dialog = new Dialog(ctx, R.style.Theme_Dialog);
+        View layout = getActivity().getLayoutInflater().inflate(R.layout.dialog_reminder, null, false);
+        int cFullFillWidth = DensityUtil.dip2px(ctx, 300);
+        layout.setMinimumWidth(cFullFillWidth);
+        TextView tvDialogContent = (TextView) layout.findViewById(R.id.tvDialogContent);
+        tvDialogContent.setText(dialogContent);
+
+        layout.findViewById(R.id.btn_dialog_save).setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                //成功保存到数据库后,做文字提示成功!
+                onUpdata(isUpdata);
+                dialog.dismiss();
+            }
+        });
+        layout.findViewById(R.id.btn_dialog_cancel).setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                dialog.dismiss();
+            }
+        });
+        dialog.setContentView(layout);
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.setCancelable(false);
+        dialog.show();
+    }
+
+
+    @Override
+    public void beforeTextChanged(CharSequence s, int start, int count, int after)
+    {
+
+    }
+
+    //自动结算水量
+    @Override
+    public void onTextChanged(CharSequence s, int start, int before, int count)
+    {
+        if (StringUtils.isEmpty(tables.USERB_SQDS))
+        {
+            return;
+        }
+        if (StringUtils.isEmpty(s.toString()))
+        {
+            return;
+        }
+        int checkCode = Integer.valueOf(s.toString());
+        int sqds = Integer.valueOf(tables.USERB_SQDS);
+        tvYield.setText(String.valueOf(checkCode - sqds));
+    }
+
+    @Override
+    public void afterTextChanged(Editable s)
+    {
+
+    }
+
+    //true有异常false无异常
+    public boolean isAbnormal(boolean isUpdata)
+    {
+        //做两次判断，并弹出框提示1、输入值不得小于本期起码  2、水量不得多或少于前三期平均水量的30%
+        String yield = tvYield.getText().toString();
+        if (StringUtils.isEmpty(yield))
+        {
+            ToastUtil.showShortToast(R.string.toast_zhima_not);
+            return true;
+        }
+        else
+        {
+            int numYield = Integer.valueOf(yield);
+            if (numYield <= 0)
+            {
+                showDialog(getResources().getString(R.string.dialog_check_code_abnormal), isUpdata);
+                return true;
+            }
+            if (!StringUtils.isEmpty(tables.Q3Q) && (Math.abs(Integer.valueOf(tables.Q3Q) - numYield) < ((numYield * 30) / 100)))
+            {
+                showDialog(getResources().getString(R.string.dialog_q3q_abnormal), isUpdata);
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    Handler mHandler = new Handler()
+    {
+        public void dispatchMessage(android.os.Message msg)
+        {
+            switch (msg.what)
+            {
+                //开始定位
+                case LocationUtils.MSG_LOCATION_START:
+                    ToastUtil.showShortToast("正在定位...");
+                    break;
+                // 定位完成
+                case LocationUtils.MSG_LOCATION_FINISH:
+                    AMapLocation loc = (AMapLocation) msg.obj;
+                    String result = LocationUtils.getLocationLatLon(loc);
+                    if (loc.getErrorCode() == 0)
+                    {
+                        tables.GPS = result;
+                        tvLocation.setText(result);
+                        ToastUtil.showShortToast("定位完成");
+                    }
+                    else
+                    {
+                        ToastUtil.showShortToast(result);
+                    }
+                    break;
+                //停止定位
+                case LocationUtils.MSG_LOCATION_STOP:
+                    ToastUtil.showShortToast("定位停止");
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        ;
+    };
+
+    @Override
+    public void onLocationChanged(AMapLocation aMapLocation)
+    {
+        if (null != aMapLocation)
+        {
+            Message msg = mHandler.obtainMessage();
+            msg.obj = aMapLocation;
+            msg.what = LocationUtils.MSG_LOCATION_FINISH;
+            mHandler.sendMessage(msg);
+        }
+        // 停止定位
+        //        locationClient.stopLocation();
+        //        mHandler.sendEmptyMessage(LocationUtils.MSG_LOCATION_STOP);
+    }
+
+    @Override
+    public void onDestroy()
+    {
+        super.onDestroy();
+        if (null != locationClient)
+        {
+            /**
+             * 如果AMapLocationClient是在当前Activity实例化的，
+             * 在Activity的onDestroy中一定要执行AMapLocationClient的onDestroy
+             */
+            locationClient.onDestroy();
+            locationClient = null;
+            locationOption = null;
+        }
+    }
+
+    private void nextPage()
+    {
+        CBGLDetailsActivity activity = (CBGLDetailsActivity) getActivity();
+        activity.nextPage();
+    }
+}

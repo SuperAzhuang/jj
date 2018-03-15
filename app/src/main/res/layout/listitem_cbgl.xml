@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="@drawable/selector_back_bg"
+              android:paddingBottom="20px"
+              android:paddingRight="20px"
+              android:paddingTop="20px">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+              android:gravity="center_vertical"
+        android:layout_height="200px"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/item_ll_pie"
+            android:layout_width="200px"
+            android:layout_height="200px"
+            android:orientation="vertical"></LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0px"
+            android:layout_height="200px"
+            android:layout_weight="1"
+            android:background="@mipmap/bg_item_cbgl"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="16px">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                >
+
+                <TextView
+                    android:id="@+id/tv_item_cehao"
+                    style="@style/tv_item_cbgl"
+                    android:layout_width="0px"
+                    android:layout_weight="4"
+                    android:drawableLeft="@mipmap/icon_cbgl_item1"
+                    android:text="东区101"
+                    />
+
+                <TextView
+                    android:id="@+id/tv_item_state"
+                    style="@style/tv_item_cbgl"
+                    android:layout_width="0px"
+                    android:layout_weight="5"
+                    android:drawableLeft="@mipmap/icon_cbgl_item2"
+                    android:text="已上传数:999"
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20px"
+                android:orientation="horizontal"
+                >
+
+                <TextView
+                    android:id="@+id/tv_item_total"
+                    style="@style/tv_item_cbgl"
+                    android:layout_width="0px"
+                    android:layout_weight="4"
+                    android:drawableLeft="@mipmap/icon_cbgl_item3"
+                    android:text="总表数:999"
+                    />
+
+                <TextView
+                    android:id="@+id/tv_item_yichao"
+                    style="@style/tv_item_cbgl"
+                    android:layout_width="0px"
+                    android:layout_marginLeft="10px"
+                    android:layout_weight="5"
+                    android:drawableLeft="@mipmap/icon_cbgl_item4"
+                    android:text="已抄表数:999"
+                    />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+
+</FrameLayout>

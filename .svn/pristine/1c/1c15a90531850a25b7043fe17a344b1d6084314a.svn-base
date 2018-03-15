@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@mipmap/bg_login"
+    tools:context=".CBGLDetailsActivity">
+
+    <RelativeLayout
+        android:id="@+id/rl_titlebar"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_alignParentTop="true"
+        >
+
+        <ImageButton
+            android:id="@+id/btn_left"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/selector_back_bg"
+            android:src="@mipmap/icon_back"/>
+
+        <TextView
+            android:id="@+id/head_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="东区中片101"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="bold"/>
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/rl_titlebar"
+        android:background="@color/white"></View>
+
+    <ListView
+        android:id="@+id/lv_customer_details"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/ll_bottombar"
+        android:layout_below="@+id/rl_titlebar"
+        android:cacheColorHint="@color/transparent"
+        android:divider="@color/white"
+        android:dividerHeight="1px"
+        android:fadingEdge="none"
+        android:listSelector="@color/transparent"
+        android:scrollbars="none">
+    </ListView>
+
+    <LinearLayout
+        android:id="@+id/ll_bottombar"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:layout_alignParentBottom="true"
+        android:background="#034984"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        >
+
+        <Button
+            android:id="@+id/btn_up"
+            style="@style/btn_details_yellow"
+            android:layout_weight="2"
+            android:text="上一户"
+            />
+
+        <Button
+            android:id="@+id/btn_save"
+            style="@style/btn_details_yellow"
+            android:layout_marginLeft="5dp"
+            android:layout_weight="1"
+            android:text="储存"/>
+
+        <Button
+            android:id="@+id/btn_down"
+            style="@style/btn_details_yellow"
+            android:layout_marginLeft="5dp"
+            android:layout_weight="2"
+            android:text="下一户"/>
+
+        <Button
+            android:id="@+id/btn_error_report"
+            style="@style/btn_details_yellow"
+            android:layout_marginLeft="5dp"
+            android:layout_weight="2"
+            android:text="异常上报"/>
+    </LinearLayout>
+</RelativeLayout>

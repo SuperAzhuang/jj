@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@mipmap/bg_login"
+    android:orientation="vertical"
+    tools:context=".ui.CBGLListActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="96px"
+        >
+
+        <ImageButton
+            android:id="@+id/btn_left"
+            android:layout_width="96px"
+            android:layout_height="96px"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/selector_back_bg"
+            android:src="@mipmap/icon_back"/>
+
+        <TextView
+            android:id="@+id/head_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="东区中片101"
+            android:textColor="@color/white"
+            android:textSize="44px"
+            android:textStyle="bold"/>
+
+
+        <LinearLayout
+            android:id="@+id/btnUploadAll"
+            android:layout_width="96px"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/selector_back_bg"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="50px"
+                android:layout_height="40px"
+                android:background="@mipmap/img_upload_data_all"/>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/white"></View>
+
+    <ListView
+        android:id="@+id/lv_customer_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:cacheColorHint="@color/transparent"
+        android:divider="@color/transparent"
+        android:dividerHeight="20px"
+        android:fadingEdge="none"
+        android:listSelector="@color/transparent"
+        android:scrollbars="none">
+    </ListView>
+</LinearLayout>

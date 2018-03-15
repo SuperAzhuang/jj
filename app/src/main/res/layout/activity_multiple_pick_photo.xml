@@ -1,0 +1,78 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+              android:background="@mipmap/bg_login"
+    tools:context=".ui.MultiplePickPhotoActivity" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp" >
+
+        <ImageButton
+            android:id="@+id/back_btn"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/selector_back_bg"
+            android:src="@mipmap/icon_back" />
+
+        <TextView
+            android:id="@+id/head_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="选择三张照片"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_actionbar"
+            android:textStyle="bold" />
+    </RelativeLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" >
+
+        <GridView
+            android:id="@+id/gridGallery"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            android:horizontalSpacing="5dp"
+            android:verticalSpacing="5dp"
+            android:listSelector="#00000000"
+            android:cacheColorHint="#00000000"
+            android:fadeScrollbars="true"
+            android:scrollbars="none"
+            android:numColumns="3"
+            >
+        </GridView>
+
+        <ImageView
+            android:id="@+id/imgNoMedia"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_margin="20dp"
+            android:visibility="gone"
+            android:contentDescription="@string/app_name"
+            android:src="@mipmap/no_media" />
+    </FrameLayout>
+
+    <Button
+        android:id="@+id/btnGalleryOk"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/bg_btn_yellow4"
+        android:gravity="center"
+        android:text="OK"
+        android:textColor="@drawable/button_textcolor"
+        android:textSize="18sp" />
+
+</LinearLayout>

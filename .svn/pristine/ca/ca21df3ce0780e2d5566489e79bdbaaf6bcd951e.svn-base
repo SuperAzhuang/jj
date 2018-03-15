@@ -1,0 +1,47 @@
+package com.feihua.jjcb.phone.callback;
+
+/**
+ * Created by wcj on 2016-03-30.
+ */
+public class BiaoCeTables
+{
+    public String VOLUME_NO;
+    public String VOLUME_MCOUNT;
+    public String USER_ID;
+    public String VOLUME_UPDATA;
+    public String VOLUME_SAVE;
+
+    public BiaoCeTables(String VOLUME_NO, String VOLUME_MCOUNT, String USER_ID, String VOLUME_UPDATA, String VOLUME_SAVE)
+    {
+        this.VOLUME_NO = VOLUME_NO;
+        this.VOLUME_MCOUNT = VOLUME_MCOUNT;
+        this.USER_ID = USER_ID;
+        this.VOLUME_UPDATA = VOLUME_UPDATA;
+        this.VOLUME_SAVE = VOLUME_SAVE;
+    }
+
+    public String getVOLUME_NO()
+    {
+        return VOLUME_NO == null ? "" : VOLUME_NO;
+    }
+
+    public String getVOLUME_MCOUNT()
+    {
+        return VOLUME_MCOUNT == null ? "" : VOLUME_MCOUNT;
+    }
+
+    public String getUSER_ID()
+    {
+        return USER_ID == null ? "" : USER_ID;
+    }
+
+    public String getVOLUME_UPDATA()
+    {
+        return VOLUME_UPDATA == null ? "" : VOLUME_UPDATA;
+    }
+
+    public String getVOLUME_SAVE()
+    {
+        return VOLUME_SAVE == null ? "" : VOLUME_SAVE;
+    }
+}

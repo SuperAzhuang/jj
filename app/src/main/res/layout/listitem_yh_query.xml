@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="70px"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tvKH"
+            style="@style/tv_tjcx_list_text"
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:gravity="center"
+            android:text="中区东片"/>
+
+        <TextView
+            android:id="@+id/tvHM"
+            style="@style/tv_tjcx_list_text"
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:singleLine="true"
+            android:text="9999.9"/>
+
+        <TextView
+            android:id="@+id/tvYSXZ"
+            style="@style/tv_tjcx_list_text"
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:gravity="center"
+            android:text="1999.9"/>
+
+        <TextView
+            android:id="@+id/tvSFFS"
+            style="@style/tv_tjcx_list_text"
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:gravity="center"
+            android:text="1999.9"/>
+
+        <TextView
+            android:id="@+id/tvQFJE"
+            style="@style/tv_tjcx_list_text"
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:gravity="center"
+            android:text="1999.9"/>
+
+
+    </LinearLayout>
+
+</LinearLayout>

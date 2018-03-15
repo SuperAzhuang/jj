@@ -1,0 +1,35 @@
+package com.feihua.jjcb.phone.fragment;
+
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
+import com.feihua.jjcb.phone.R;
+import com.feihua.jjcb.phone.constants.Constants;
+import com.feihua.jjcb.phone.utils.SharedPreUtils;
+
+import java.util.ArrayList;
+
+/**
+ * 报装查询
+ * Created by wcj on 2016-03-02.
+ */
+public class BZCXfragment extends YHCXfragment
+{
+
+    public void setHeadTitle()
+    {
+        tvTitleRight.setText("工程查询");
+        tvTitleLeft.setText("报装统计");
+    }
+
+    public void initList()
+    {
+        fragmentDatas = new ArrayList<>();
+        fragmentDatas.add(new BZStatisticsFragment());
+        fragmentDatas.add(new GCQueryFragment());
+    }
+}

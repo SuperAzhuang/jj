@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="70px"
+        android:background="#e89800"
+        android:gravity="center_vertical">
+
+        <TextView
+            style="@style/tv_tjcx_text_title"
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:gravity="center"
+            android:text="户号"/>
+
+        <TextView
+            style="@style/tv_tjcx_text_title"
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:gravity="center"
+            android:text="年月"/>
+
+        <TextView
+            style="@style/tv_tjcx_text_title"
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:gravity="center"
+            android:text="上次抄表"/>
+
+        <TextView
+            style="@style/tv_tjcx_text_title"
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:gravity="center"
+            android:text="本次抄表"/>
+
+        <TextView
+            style="@style/tv_tjcx_text_title"
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:gravity="center"
+            android:text="水量"/>
+
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/lvCB"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:divider="@drawable/line_black_h">
+
+    </ListView>
+
+</LinearLayout>

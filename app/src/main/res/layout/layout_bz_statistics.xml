@@ -1,0 +1,340 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@mipmap/img_bzcx_bg"
+              android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="70px"
+        android:layout_marginTop="40px"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="20px"
+        android:paddingRight="20px">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10px"
+            android:text="月份:"
+            android:textColor="@color/white"
+            android:textSize="34px"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/btn_yellow"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tvMonth1"
+                style="@style/tv_bz_statistics"
+                android:background="@drawable/btn_bz_tiaojian_bg_left"
+                android:text="1"/>
+
+            <TextView
+                android:id="@+id/tvMonth2"
+                style="@style/tv_bz_statistics"
+                android:background="@drawable/btn_bz_tiaojian_bg"
+                android:text="2"/>
+
+            <TextView
+                android:id="@+id/tvMonth3"
+                style="@style/tv_bz_statistics"
+                android:background="@drawable/btn_bz_tiaojian_bg"
+                android:text="3"/>
+
+            <TextView
+                android:id="@+id/tvMonth4"
+                style="@style/tv_bz_statistics"
+                android:background="@drawable/btn_bz_tiaojian_bg"
+                android:text="4"/>
+
+            <TextView
+                android:id="@+id/tvMonth5"
+                style="@style/tv_bz_statistics"
+                android:background="@drawable/btn_bz_tiaojian_bg"
+                android:text="5"/>
+
+            <TextView
+                android:id="@+id/tvMonth6"
+                style="@style/tv_bz_statistics"
+                android:background="@drawable/btn_bz_tiaojian_bg"
+                android:text="6"/>
+
+            <TextView
+                android:id="@+id/tvMonth7"
+                style="@style/tv_bz_statistics"
+                android:background="@drawable/btn_bz_tiaojian_bg"
+                android:text="7"/>
+
+            <TextView
+                android:id="@+id/tvMonth8"
+                style="@style/tv_bz_statistics"
+                android:background="@drawable/btn_bz_tiaojian_bg"
+                android:text="8"/>
+
+            <TextView
+                android:id="@+id/tvMonth9"
+                style="@style/tv_bz_statistics"
+                android:background="@drawable/btn_bz_tiaojian_bg"
+                android:text="9"/>
+
+            <TextView
+                android:id="@+id/tvMonth10"
+                style="@style/tv_bz_statistics"
+                android:background="@drawable/btn_bz_tiaojian_bg"
+                android:text="10"/>
+
+            <TextView
+                android:id="@+id/tvMonth11"
+                style="@style/tv_bz_statistics"
+                android:background="@drawable/btn_bz_tiaojian_bg"
+                android:text="11"/>
+
+            <TextView
+                android:id="@+id/tvMonth12"
+                style="@style/tv_bz_statistics"
+                android:background="@drawable/btn_bz_tiaojian_bg_right"
+                android:text="12"/>
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="70px"
+        android:layout_marginTop="30px"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="20px"
+        android:paddingRight="20px">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10px"
+            android:text="用水性质:"
+            android:textColor="@color/white"
+            android:textSize="34px"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/btn_yellow"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tvYSXZ1"
+                style="@style/tv_bz_statistics"
+                android:background="@drawable/btn_bz_tiaojian_bg_left"
+                android:text="居民"/>
+
+            <TextView
+                android:id="@+id/tvYSXZ2"
+                style="@style/tv_bz_statistics"
+                android:background="@drawable/btn_bz_tiaojian_bg"
+                android:text="其他"/>
+
+            <TextView
+                android:id="@+id/tvYSXZ3"
+                style="@style/tv_bz_statistics"
+                android:background="@drawable/btn_bz_tiaojian_bg"
+                android:text="特种"/>
+
+            <TextView
+                android:id="@+id/tvYSXZ4"
+                style="@style/tv_bz_statistics"
+                android:background="@drawable/btn_bz_tiaojian_bg_right"
+                android:text="公益"/>
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="70px"
+        android:layout_marginTop="30px"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="20px"
+        android:paddingRight="20px">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10px"
+            android:text="用户类别:"
+            android:textColor="@color/white"
+            android:textSize="34px"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/btn_yellow"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tvYHLB1"
+                style="@style/tv_bz_statistics"
+                android:layout_width="30px"
+                android:background="@drawable/btn_bz_tiaojian_bg_left"
+                android:text="临时用水"/>
+
+            <TextView
+                android:id="@+id/tvYHLB2"
+                style="@style/tv_bz_statistics"
+                android:background="@drawable/btn_bz_tiaojian_bg"
+                android:text="个人"/>
+
+            <TextView
+                android:id="@+id/tvYHLB3"
+                style="@style/tv_bz_statistics"
+                android:background="@drawable/btn_bz_tiaojian_bg"
+                android:text="单位"/>
+
+            <TextView
+                android:id="@+id/tvYHLB4"
+                style="@style/tv_bz_statistics"
+                android:background="@drawable/btn_bz_tiaojian_bg_right"
+                android:text="房地产"/>
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="70px"
+        android:layout_marginTop="30px"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="20px"
+        android:paddingRight="20px">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10px"
+            android:text="工程性质:"
+            android:textColor="@color/white"
+            android:textSize="34px"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/btn_yellow"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tvGCXZ1"
+                style="@style/tv_bz_statistics"
+                android:background="@drawable/btn_bz_tiaojian_bg_left"
+                android:text="用户工程"/>
+
+            <TextView
+                android:id="@+id/tvGCXZ2"
+                style="@style/tv_bz_statistics"
+                android:background="@drawable/btn_bz_tiaojian_bg"
+                android:text="公司工程"/>
+
+            <TextView
+                android:id="@+id/tvGCXZ3"
+                style="@style/tv_bz_statistics"
+                android:background="@drawable/btn_bz_tiaojian_bg_right"
+                android:text="一户一表"/>
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="70px"
+        android:layout_marginTop="40px"
+        android:gravity="right"
+        android:orientation="horizontal"
+        android:paddingLeft="20px"
+        android:paddingRight="20px">
+
+        <Button
+            android:id="@+id/btnQuery"
+            android:layout_width="350px"
+            android:layout_height="match_parent"
+            android:background="@drawable/btn_yellow"
+            android:text="查　询"
+            android:textColor="@color/white"
+            android:textSize="34px"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="bottom"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="120px"
+            android:scaleType="fitXY"
+            android:layout_marginBottom="30px"
+            android:src="@mipmap/img_bzcx_tongji"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="50px"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                style="@style/item_bzcx_layout">
+
+                <TextView
+                    style="@style/item_bzcx_tv"
+                    android:text="申请户数"/>
+
+                <TextView
+                    style="@style/item_bzcx_tv"
+                    android:text="500"/>
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/item_bzcx_layout">
+
+                <TextView
+                    style="@style/item_bzcx_tv"
+                    android:text="合同户数"/>
+
+                <TextView
+                    style="@style/item_bzcx_tv"
+                    android:text="500"/>
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/item_bzcx_layout">
+
+                <TextView
+                    style="@style/item_bzcx_tv"
+                    android:text="新立户数"/>
+
+                <TextView
+                    style="@style/item_bzcx_tv"
+                    android:text="500"/>
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+
+    </LinearLayout>
+
+</LinearLayout>

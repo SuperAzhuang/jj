@@ -1,0 +1,606 @@
+package com.feihua.jjcb.phone.service;
+
+import android.app.AlarmManager;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.app.Service;
+import android.content.BroadcastReceiver;
+import android.content.ContentValues;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.database.ContentObserver;
+import android.location.LocationManager;
+import android.os.Handler;
+import android.os.IBinder;
+import android.os.SystemClock;
+import android.os.Vibrator;
+import android.provider.Settings;
+import android.support.v4.app.NotificationCompat;
+import android.telephony.PhoneStateListener;
+import android.telephony.TelephonyManager;
+import android.util.Log;
+
+import com.amap.api.location.AMapLocation;
+import com.amap.api.location.AMapLocationClient;
+import com.amap.api.location.AMapLocationClientOption;
+import com.amap.api.location.AMapLocationListener;
+import com.feihua.jjcb.phone.R;
+import com.feihua.jjcb.phone.callback.NotObjCommonCallback;
+import com.feihua.jjcb.phone.constants.Constants;
+import com.feihua.jjcb.phone.db.DatabaseHelper;
+import com.feihua.jjcb.phone.db.UseDatabase;
+import com.feihua.jjcb.phone.utils.DateUtil;
+import com.feihua.jjcb.phone.utils.SharedPreUtils;
+import com.feihua.jjcb.phone.utils.ToastUtil;
+import com.zhy.http.okhttp.OkHttpUtils;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.Date;
+import java.util.Timer;
+import java.util.TimerTask;
+
+public class TargetService extends Service implements AMapLocationListener
+{
+    private String chaobiaoyuan = "a4908a2816424412ac5325c4c9590f7a";
+    private AMapLocationClient locationClient;
+    private AMapLocationClientOption locationOption;
+    private Context ctx;
+    private boolean isUploadLocation = false;
+    private boolean isUpload = false;
+    private Handler handler = new Handler();
+    private int timeNum = 0;
+    private int timeDelayed = 60000;
+    private UseDatabase useDatabase;
+    private boolean isUploadMore;
+    private Vibrator vibrator;
+    private long[] patterns;
+    private Intent alarmIntent;
+    private PendingIntent alarmPi;
+    private AlarmManager alarm;
+    private TelephonyManager manager;
+    private boolean isCall;
+    private int saveNum;
+    private LocationManager locationManager;
+    private BroadcastReceiver alarmReceiver = new BroadcastReceiver()
+    {
+        @Override
+        public void onReceive(Context context, Intent intent)
+        {
+            if (intent.getAction().equals("LOCATION"))
+            {
+                if (null != locationClient)
+                {
+                    locationClient.startLocation();
+                }
+            }
+        }
+    };
+    ContentObserver mGpsMonitor = new ContentObserver(null)
+    {
+        @Override
+        public void onChange(boolean selfChange)
+        {
+            super.onChange(selfChange);
+            boolean hasGPS = hasGPS();
+            Log.w("TargetService", "mGpsMonitor");
+            if (!hasGPS)
+            {
+                if (getIsUploadLocation())
+                {// 工作时间才发送通知
+                    sendNotification();
+                }
+            }
+        }
+    };
+    private int REQUECT_CODE_INTERNET = 5;
+
+    public TargetService()
+    {
+    }
+
+    @Override
+    public void onCreate()
+    {
+        super.onCreate();
+        ctx = this;
+        useDatabase = new UseDatabase(ctx);
+
+        locationManager = ((LocationManager) getSystemService(Context.LOCATION_SERVICE));
+
+        vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+        patterns = new long[]{100, 400, 100, 400, 100, 400};// 停止 开启 停止 开启
+
+        // 获取电话服务
+        manager = (TelephonyManager) this.getSystemService(TELEPHONY_SERVICE);
+        // 手动注册对PhoneStateListener中的listen_call_state状态进行监听
+        manager.listen(new MyPhoneStateListener(), PhoneStateListener.LISTEN_CALL_STATE);
+
+        settingGpsSwitch();// 监听GPS开关状态,在工作时间没打开时,发送通知
+        initGaoDeLocation();
+        timerControlSwitch();
+        initAlarm();
+    }
+
+    private void settingGpsSwitch()
+    {// 监测GPS开关状态
+        getContentResolver().registerContentObserver(Settings.Secure.getUriFor(Settings.System.LOCATION_PROVIDERS_ALLOWED), true, mGpsMonitor);
+    }
+
+    private boolean hasGPS()
+    {
+        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+    }
+
+    private void sendNotification()
+    {
+        Intent intent = new Intent();
+        intent.setAction(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
+        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext());
+        builder.setTicker("请打开手机GPS定位开关");
+        builder.setSmallIcon(R.mipmap.icon);
+        builder.setWhen(System.currentTimeMillis());
+        builder.setAutoCancel(true);
+        builder.setContentTitle("请打开手机GPS定位开关");
+        builder.setContentText("为了确保你的地理位置上传信息准确，请打开");
+        builder.setDefaults(Notification.DEFAULT_VIBRATE);
+        builder.setContentIntent(pendingIntent);
+        notificationManager.notify(0, builder.build());
+    }
+
+    private void timerControlSwitch()
+    {
+        // 在清单里不能加android:process=":remote",因为加了,表示调用到不同进程的SP,在MainActivity系统进程修改SP,在另外的remote进程肯定得不到修改后的值.
+        Timer timer = new Timer();
+        TimerTask task = new TimerTask()
+        {
+            // 用Timer备注：如果手动修改系统时间，往后修改没问题，往前修改，会暂停到恢复原来时间后继续运行
+            @Override
+            public void run()
+            {
+                Log.w("TargetService", "timerControlSwitch");
+                if (SharedPreUtils.getBoolean(Constants.IS_LOGIN, ctx) && isCall != true)
+                {
+                    getLoginToken();
+                }
+
+                if (!getIsUploadLocation())
+                {
+                    if (locationClient != null && locationClient.isStarted())
+                    {
+                        locationClient.stopLocation();
+                        // 停止定位的时候取消闹钟
+                        if (null != alarm)
+                        {
+                            alarm.cancel(alarmPi);
+                        }
+                    }
+                    return;
+                }
+
+                if (getWorkTime())
+                {
+                    if (locationClient != null && !locationClient.isStarted())
+                    {
+                        locationClient.startLocation();
+                        if (null != alarm)
+                        {
+                            // 设置一个闹钟，2秒之后每隔一段时间执行启动一次定位程序
+                            alarm.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime() + 2 * 1000, 5 * 1000, alarmPi);
+                        }
+                    }
+                    if (!isUpload)
+                    {
+                        isUpload = true;
+                        startUpload();
+                    }
+                }
+                else
+                {
+                    // 下班时间
+                    if (locationClient != null && locationClient.isStarted())
+                    {
+                        // 停止定位的时候取消闹钟
+                        if (null != alarm)
+                        {
+                            alarm.cancel(alarmPi);
+                        }
+                        ;
+                        locationClient.stopLocation();
+                        isUpload = false;
+                        // updataServer();
+                    }
+                }
+
+            }
+        };
+        timer.schedule(task, 1000, 5 * 1000);
+    }
+
+    private void startUpload()
+    {
+        handler.postDelayed(new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                if (!isUploadLocation)
+                {
+                    return;
+                }
+                timeNum++;
+                timeNum = timeNum % 5;
+                if (timeNum == 0)
+                {
+                    uploadServer();
+                }
+                if (!isUpload)
+                {
+                    uploadServer();
+                    return;
+                }
+                handler.postDelayed(this, timeDelayed);
+            }
+        }, timeDelayed);
+    }
+
+    //数据库是否超过100条
+    private void uploadServer()
+    {
+        if (SharedPreUtils.getBoolean(Constants.IS_LOGIN, this))
+        {
+            isUploadMore = false;
+            if (useDatabase.queryCount() > 100)
+            {
+                isUploadMore = true;
+            }
+            JSONArray deptArray = useDatabase.DeptArray();
+            httpUploadGPS(deptArray);
+        }
+    }
+
+    private void httpUploadGPS(final JSONArray deptArray)
+    {
+        String datas = deptArray.toString();
+        Log.w("TargetService", "datas = " + datas);
+        if (deptArray.length() == 0)
+        {
+            return;
+        }
+
+        OkHttpUtils.post()//
+                .url(Constants.UPLOAD_LOCATION)//
+                .addParams("zb", datas)//
+                .build()//
+                .execute(new NotObjCommonCallback()
+                {
+                    @Override
+                    public void onNetworkError(boolean isNetwork, String error)
+                    {
+                        if (isNetwork)
+                        {
+                            // 手机震动提醒
+                            vibrator.vibrate(patterns, -1);// 重复次数,-1为只震动一次
+                            ToastUtil.showShortToast(R.string.toast_network_anomalies);
+                        }
+                    }
+
+                    @Override
+                    public void onResponse(Boolean isSuccess)
+                    {
+                        if (isSuccess)
+                        {
+                            delSqiData(deptArray);
+                        }
+                        else
+                        {
+                            // 手机震动提醒
+                            vibrator.vibrate(patterns, -1);// 重复次数,-1为只震动一次
+                            ToastUtil.showShortToast(R.string.toast_network_anomalies);
+                        }
+                    }
+                });
+
+    }
+
+    // 数据上传成功,删除数据库中数据
+    private void delSqiData(final JSONArray deptArray)
+    {
+        handler.post(new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                String[] whereArgs = new String[deptArray.length()];
+                for (int i = 0; i < whereArgs.length; i++)
+                {
+                    try
+                    {
+                        JSONObject jsonObject = deptArray.getJSONObject(i);
+                        String time = jsonObject.getString(DatabaseHelper.UP_TIME);
+                        whereArgs[i] = String.valueOf(time);
+                    }
+                    catch (JSONException e)
+                    {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
+                }
+                useDatabase.delete(DatabaseHelper.LOCATION_TABLE_NAME, DatabaseHelper.UP_TIME + "=?", whereArgs);
+
+                int count = useDatabase.queryCount();
+                Log.w("TargetService", "count = " + count);
+                if (isUploadMore && useDatabase.queryCount() > 0)
+                {
+                    uploadServer();
+                }
+            }
+        });
+    }
+
+    //是否在工作时间内
+    private boolean getWorkTime()
+    {
+        int hour = Integer.valueOf(DateUtil.getCurrentHour());
+        if (8 < hour && hour < 18)
+        {
+            return true;
+        }
+        return false;
+    }
+
+    //员工是否是抄表员,true是,false不是(关闭高德定位)
+    private boolean getIsUploadLocation()
+    {
+        String roleId = SharedPreUtils.getString(Constants.ROLE_ID, ctx);
+        if (roleId != null && chaobiaoyuan.equals(roleId))
+        {
+            isUploadLocation = true;
+        }
+        else
+        {
+            isUploadLocation = false;
+            isUpload = false;
+        }
+        return isUploadLocation;
+    }
+
+    // 初始化高德地图
+    private void initGaoDeLocation()
+    {
+        locationClient = new AMapLocationClient(this.getApplicationContext());
+        locationOption = new AMapLocationClientOption();
+        // 设置定位监听
+        locationClient.setLocationListener(this);
+        // 设置定位模式为高精度模式
+        locationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
+        // 设置是否需要显示地址信息
+        locationOption.setNeedAddress(true);
+
+        /**
+         * 设置是否优先返回GPS定位结果，如果30秒内GPS没有返回定位结果则进行网络定位 注意：只有在高精度模式下的单次定位有效，其他方式无效
+         */
+        locationOption.setGpsFirst(true);
+        // 设置是否只定位一次,默认为false
+        locationOption.setOnceLocation(false);
+        // 设置发送定位请求的时间间隔,最小值为1000，如果小于1000，按照1000算
+        locationOption.setInterval(2000);
+        // 设置定位参数
+        locationClient.setLocationOption(locationOption);
+    }
+
+    // CPU定时唤醒
+    private void initAlarm()
+    {
+        // 创建Intent对象，action为LOCATION
+        alarmIntent = new Intent();
+        alarmIntent.setAction("LOCATION");
+        IntentFilter ift = new IntentFilter();
+
+        // 定义一个PendingIntent对象，PendingIntent.getBroadcast包含了sendBroadcast的动作。
+        // 也就是发送了action 为"LOCATION"的intent
+        alarmPi = PendingIntent.getBroadcast(this, 0, alarmIntent, 0);
+        // AlarmManager对象,注意这里并不是new一个对象，Alarmmanager为系统级服务
+        alarm = (AlarmManager) getSystemService(ALARM_SERVICE);
+
+        // 动态注册一个广播
+        IntentFilter filter = new IntentFilter();
+        filter.addAction("LOCATION");
+        registerReceiver(alarmReceiver, filter);
+        //        if (null != alarm)
+        //        {
+        // 设置一个闹钟，2秒之后每隔一段时间执行启动一次定位程序
+        //            alarm.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime() + 2 * 1000, 5 * 1000, alarmPi);
+        //        }
+    }
+
+
+    @Override
+    public IBinder onBind(Intent intent)
+    {
+
+        return null;
+    }
+
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId)
+    {
+        flags = START_STICKY;
+        return super.onStartCommand(intent, flags, startId);
+    }
+
+    @Override
+    public void onDestroy()
+    {
+        getContentResolver().unregisterContentObserver(mGpsMonitor);
+        isUpload = false;
+        Intent i = new Intent(Constants.TARGETSERVICE_DESTORY);
+        sendBroadcast(i);
+        vibrator.cancel();
+        if (null != alarmReceiver)
+        {
+            unregisterReceiver(alarmReceiver);
+            alarmReceiver = null;
+        }
+        // 停止定位的时候取消闹钟
+        if (null != alarm)
+        {
+            alarm.cancel(alarmPi);
+        }
+        super.onDestroy();
+    }
+
+    @Override
+    public void onLocationChanged(AMapLocation aMapLocation)
+    {
+        if (!SharedPreUtils.getBoolean(Constants.IS_LOGIN, this))
+        {
+            return;
+        }
+        if (!getWorkTime())
+        {
+            return;
+        }
+        saveNum++;
+        saveNum = (int) (saveNum % (15));
+        Log.w("TargetService", "saveNum = " + saveNum);
+        if (saveNum != 0)
+        {
+            return;
+        }
+
+        if (aMapLocation != null)
+        {
+            String UP_TIME = DateUtil.format(new Date());
+            String userId = SharedPreUtils.getString(Constants.USER_ID, this);
+            if (aMapLocation.getErrorCode() == 0)
+            {
+                // TODO
+                // 定位成功回调信息，设置相关消息
+                // 获取当前定位结果来源，如网络定位结果，详见定位类型表
+                // 1GPS定位结果 2前次定位结果 4缓存定位结果5Wifi定位结果6基站定位结果8离线定位结果
+                int LOC_MODE = aMapLocation.getLocationType();
+                double LAT = aMapLocation.getLatitude();// 获取纬度
+                double LON = aMapLocation.getLongitude();// 获取经度
+                //                    aMapLocation.getAccuracy();// 获取精度信息
+                String speed = String.valueOf(aMapLocation.getSpeed());// 获取当前速度
+
+                String content = "{lat = " + LAT + ",lon =" + LON + ",time = " + UP_TIME + ",speed = " + speed + "米/秒}";
+                Log.w("TargetService", "content = " + content);
+                ContentValues values = new ContentValues();
+                values.put(DatabaseHelper.LONTITUDE, LON);
+                values.put(DatabaseHelper.LATITUDE, LAT);
+                values.put(DatabaseHelper.USER_ID, userId);
+                values.put(DatabaseHelper.UP_TIME, UP_TIME);
+                values.put(DatabaseHelper.SPEED, speed);
+                values.put(DatabaseHelper.LOC_MODE, LOC_MODE);
+                useDatabase.insert(DatabaseHelper.LOCATION_TABLE_NAME, values);
+                int count = useDatabase.queryCount();
+                Log.w("TargetService", "count = " + count);
+            }
+            else
+            {
+                // 显示错误信息ErrCode是错误码，errInfo是错误信息，详见错误码表。
+                Log.w("TargetService", "location Error, ErrCode:" + aMapLocation.getErrorCode() + ", errInfo:" + aMapLocation.getErrorInfo());
+                if (aMapLocation.getErrorCode() == 4)
+                {
+                    String content = "定位异常";
+                    Log.w("TargetService", "content = " + content);
+                    ContentValues values = new ContentValues();
+                    values.put(DatabaseHelper.LONTITUDE, "1");
+                    values.put(DatabaseHelper.LATITUDE, "1");
+                    values.put(DatabaseHelper.USER_ID, userId);
+                    values.put(DatabaseHelper.UP_TIME, UP_TIME);
+                    values.put(DatabaseHelper.SPEED, "1");
+                    values.put(DatabaseHelper.LOC_MODE, "100");//100定位异常
+                    useDatabase.insert(DatabaseHelper.LOCATION_TABLE_NAME, values);
+                    int count = useDatabase.queryCount();
+                    Log.w("TargetService", "count = " + count);
+                }
+            }
+        }
+
+    }
+
+    /***
+     * 继承PhoneStateListener类，我们可以重新其内部的各种监听方法 然后通过手机状态改变时，系统自动触发这些方法来实现我们想要的功能
+     */
+    class MyPhoneStateListener extends PhoneStateListener
+    {
+
+        @Override
+        public void onCallStateChanged(int state, String incomingNumber)
+        {
+            switch (state)
+            {
+                case TelephonyManager.CALL_STATE_IDLE:
+                    isCall = false;
+                    break;
+                case TelephonyManager.CALL_STATE_RINGING:
+                    isCall = true;
+                    break;
+                case TelephonyManager.CALL_STATE_OFFHOOK:
+                    isCall = true;
+                default:
+                    break;
+            }
+            super.onCallStateChanged(state, incomingNumber);
+        }
+
+    }
+
+    private void getLoginToken()
+    {
+        Log.w("TargetService", "getLoginToken");
+        String loginTokens = SharedPreUtils.getString(Constants.LOGIN_TOKENS, ctx);
+        String USER_ID = SharedPreUtils.getString(Constants.USER_ID, ctx);
+
+        OkHttpUtils.post()//
+                .url(Constants.USER_IS_KICK)//
+                .addParams("USER_ID", USER_ID)//
+                .addParams("LOGIN_TOKENS", loginTokens)//
+                .build()//
+                .execute(new NotObjCommonCallback()
+                {
+                    @Override
+                    public void onNetworkError(boolean isNetwork, String error)
+                    {
+                        Log.w("TargetService", "onNetworkError = " + error);
+                        if (isNetwork)
+                        {
+
+                        }
+                        else
+                        {
+                            Log.w("TargetService", "isNetwork = " + isNetwork);
+                            if ("您被踢下线！".equals(error))
+                            {
+                                Log.w("TargetService", "您被踢下线了！");
+                                if (locationClient.isStarted())
+                                {
+                                    Log.w("TargetService", "stopLocation");
+                                    locationClient.stopLocation();
+                                }
+                                SharedPreUtils.putBoolean(Constants.IS_LOGIN, false, ctx);
+                                uploadServer();
+                                sendBroadcast(new Intent(Constants.LOGINTOKEN_ERROR_SERVICE));
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onResponse(Boolean isSuccess)
+                    {
+                        Log.w("TargetService", "onResponse = ");
+                    }
+                });
+    }
+}
+

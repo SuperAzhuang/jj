@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:fitsSystemWindows="true"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@mipmap/bg_login"
+    android:orientation="vertical"
+    tools:context=".ui.MainActivity">
+
+    <com.feihua.jjcb.phone.view.NoScrollViewPager
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_weight="1"
+        android:layout_height="0px">
+
+    </com.feihua.jjcb.phone.view.NoScrollViewPager>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2px"
+        android:background="@color/white"/>
+
+    <RadioGroup
+        android:id="@+id/indicator_group"
+        android:layout_width="match_parent"
+        android:layout_height="140px"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/main_cbgl"
+            android:layout_height="wrap_content"
+            style="@style/RadioButtonMain"
+            android:layout_gravity="center"
+            android:button="@null"
+            android:checked="false"
+            android:drawableTop="@drawable/radio_check1"
+            android:gravity="center|bottom"
+            android:text="@string/main_cbgl"/>
+
+        <RadioButton
+            android:id="@+id/main_yhcx"
+            android:layout_height="wrap_content"
+            style="@style/RadioButtonMain"
+            android:layout_gravity="center"
+            android:button="@null"
+            android:drawableTop="@drawable/radio_check2"
+            android:gravity="center|bottom"
+            android:text="@string/main_yhcx"/>
+
+        <RadioButton
+            android:id="@+id/main_qfcx"
+            android:layout_height="wrap_content"
+            style="@style/RadioButtonMain"
+            android:layout_gravity="center"
+            android:button="@null"
+            android:drawableTop="@drawable/radio_check3"
+            android:gravity="center|bottom"
+            android:text="@string/main_qfcx"/>
+
+        <RadioButton
+            android:id="@+id/main_bzcx"
+            android:layout_height="wrap_content"
+            style="@style/RadioButtonMain"
+            android:layout_gravity="center"
+            android:button="@null"
+            android:drawableTop="@drawable/radio_check4"
+            android:gravity="center|bottom"
+            android:text="@string/main_bzcx"/>
+
+        <RadioButton
+            android:id="@+id/main_user"
+            android:layout_height="wrap_content"
+            style="@style/RadioButtonMain"
+            android:layout_gravity="center"
+            android:button="@null"
+            android:drawableTop="@drawable/radio_check5"
+            android:gravity="center|bottom"
+            android:text="@string/main_user"/>
+    </RadioGroup>
+
+</LinearLayout>

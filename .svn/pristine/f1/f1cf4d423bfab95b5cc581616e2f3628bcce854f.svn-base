@@ -1,0 +1,62 @@
+package com.feihua.jjcb.phone.fragment;
+
+import android.graphics.Color;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AbsListView;
+import android.widget.LinearLayout;
+import android.widget.ListView;
+
+import com.feihua.jjcb.phone.Adapter.CBGLbaseAdapter;
+import com.feihua.jjcb.phone.R;
+import com.feihua.jjcb.phone.application.Constants;
+import com.feihua.jjcb.phone.utils.SharedPreUtils;
+
+import org.achartengine.ChartFactory;
+import org.achartengine.GraphicalView;
+import org.achartengine.model.CategorySeries;
+import org.achartengine.renderer.DefaultRenderer;
+import org.achartengine.renderer.SimpleSeriesRenderer;
+
+/**
+ * 抄表管理
+ * Created by wcj on 2016-03-02.
+ */
+public class CBGLfragment extends Fragment implements View.OnClickListener
+{
+
+    private View layout;
+    private GraphicalView graphicalView;
+    private LinearLayout llll;
+    private ListView mLv_cbgl;
+
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+    {
+        SharedPreUtils.putString(Constants.LAST_FRAGMENT, "CBGLfragment", getActivity());
+        layout = inflater.inflate(R.layout.layout_cbgl, null, false);
+        initView();
+        return layout;
+    }
+
+    private void initView()
+    {
+        CBGLbaseAdapter mCBGLadapter = new CBGLbaseAdapter(getActivity());
+        mLv_cbgl = (ListView) layout.findViewById(R.id.lv_cbgl);
+        mLv_cbgl.setAdapter(mCBGLadapter);
+        layout.findViewById(R.id.btn_right).setOnClickListener(this);
+
+    }
+
+
+    @Override
+    public void onClick(View v)
+    {
+
+    }
+}

@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:app="http://schemas.android.com/apk/res-auto"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:background="@mipmap/img_hhss_bg"
+             android:paddingBottom="40px"
+             android:paddingLeft="40px"
+             android:paddingRight="40px"
+             android:paddingTop="40px">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center">
+
+        <LinearLayout
+            android:layout_width="521px"
+            android:layout_height="521px"
+            android:background="@mipmap/img_hhss_circle_bg"
+            android:orientation="vertical"
+            app:layout_auto_baseheight="width">
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20px">
+
+                <TextView
+                    android:id="@+id/tvSearchHistory1"
+                    style="@style/tv_hhss_search_history"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:background="@drawable/button_bg_search_history_red"
+                    android:text="用户KH"/>
+
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10px">
+
+                <TextView
+                    android:id="@+id/tvSearchHistory2"
+                    style="@style/tv_hhss_search_history"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginLeft="30px"
+                    android:background="@drawable/button_bg_search_history_yellow"
+                    android:text="用户KH"/>
+
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30px">
+
+                <TextView
+                    android:id="@+id/tvSearchHistory3"
+                    style="@style/tv_hhss_search_history"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginEnd="31dp"
+                    android:layout_marginRight="31dp"
+                    android:background="@drawable/button_bg_search_history_green"
+                    android:text="用户KH"/>
+
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="50px">
+
+                <TextView
+                    android:id="@+id/tvSearchHistory4"
+                    style="@style/tv_hhss_search_history"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:background="@drawable/button_bg_search_history_viloet"
+                    android:text="用户KH"/>
+
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/tvSearchHistory5"
+                    style="@style/tv_hhss_search_history"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentTop="true"
+                    android:background="@drawable/button_bg_search_history_yellow"
+                    android:text="用户KH"/>
+
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="60px">
+
+                <TextView
+                    android:id="@+id/tvSearchHistory6"
+                    style="@style/tv_hhss_search_history"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginEnd="65dp"
+                    android:layout_marginRight="65dp"
+                    android:background="@drawable/button_bg_search_history_yellow"
+                    android:text="用户KH"/>
+
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10px">
+
+                <TextView
+                    android:id="@+id/tvSearchHistory7"
+                    style="@style/tv_hhss_search_history"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginLeft="47dp"
+                    android:layout_marginStart="47dp"
+                    android:background="@drawable/button_bg_search_history_red"
+                    android:text="用户KH"/>
+
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10px">
+
+                <TextView
+                    android:id="@+id/tvSearchHistory8"
+                    style="@style/tv_hhss_search_history"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginEnd="31dp"
+                    android:layout_marginRight="31dp"
+                    android:background="@drawable/button_bg_search_history_green"
+                    android:text="用户KH"/>
+
+
+            </RelativeLayout>
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="90px"
+            android:background="@mipmap/img_hhss_search_bg"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:id="@+id/linearLayout">
+
+            <EditText
+                android:id="@+id/etSearch"
+                android:layout_width="0px"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="40px"
+                android:layout_marginRight="15px"
+                android:layout_weight="1"
+                android:background="@null"
+                android:hint="输入你要搜索的户号"
+                android:textColor="#FFFFFF"
+                android:textColorHint="#88ffffff"
+                android:textSize="34px"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="30px"
+                android:background="@drawable/selector_back_bg"
+                android:clickable="true"
+                android:gravity="center_vertical"
+                android:padding="10px">
+
+                <ImageView
+                    android:id="@+id/imgSearch"
+                    android:layout_width="70px"
+                    android:layout_height="55px"
+                    android:src="@mipmap/img_hhss_search"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="160px"
+            android:layout_height="60px"
+            android:scaleType="fitXY"
+            android:src="@mipmap/img_hhss_search_hisro"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"/>
+    </RelativeLayout>
+</FrameLayout>

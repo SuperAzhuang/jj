@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@mipmap/bg_user"
+              android:orientation="vertical">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="320px"
+                android:background="@mipmap/bg_user_head"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="180px"
+                    android:layout_height="180px"
+                    android:src="@mipmap/icon_headlogo"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingBottom="40px"
+                android:paddingLeft="40px"
+                android:paddingRight="40px"
+                android:paddingTop="20px">
+
+                <LinearLayout
+                    style="@style/ll_user">
+
+                    <TextView
+                        style="@style/tv_user_left"
+                        android:drawableLeft="@mipmap/icon_user_color1"
+                        android:text="@string/user_name"
+                        />
+
+                    <TextView
+                        android:id="@+id/tv_user_name"
+                        style="@style/tv_user_right"
+                        android:text="@string/user_name"
+                        />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2px"
+                    android:background="@color/white"/>
+
+                <LinearLayout
+                    style="@style/ll_user">
+
+                    <TextView
+                        style="@style/tv_user_left"
+                        android:drawableLeft="@mipmap/icon_user_color2"
+                        android:text="@string/user_position"/>
+
+                    <TextView
+                        android:id="@+id/tv_user_position"
+                        style="@style/tv_user_right"
+                        android:text="@string/user_position"
+                        />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2px"
+                    android:background="@color/white"/>
+
+                <LinearLayout
+                    style="@style/ll_user">
+
+                    <TextView
+                        style="@style/tv_user_left"
+                        android:drawableLeft="@mipmap/icon_user_color3"
+                        android:text="@string/user_number"/>
+
+                    <TextView
+                        android:id="@+id/tv_user_number"
+                        style="@style/tv_user_right"
+                        android:text="@string/user_number"
+                        />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2px"
+                    android:background="@color/white"/>
+
+                <LinearLayout
+                    style="@style/ll_user">
+
+                    <TextView
+                        style="@style/tv_user_left"
+                        android:drawableLeft="@mipmap/icon_user_color4"
+                        android:text="@string/user_phone"/>
+
+                    <TextView
+                        android:id="@+id/tv_user_phone"
+                        style="@style/tv_user_right"
+                        android:text="@string/user_phone"
+                        />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2px"
+                    android:background="@color/white"/>
+
+                <LinearLayout
+                    style="@style/ll_user">
+
+                    <TextView
+                        style="@style/tv_user_left"
+                        android:drawableLeft="@mipmap/icon_user_color5"
+                        android:text="@string/user_area"/>
+
+                    <TextView
+                        android:id="@+id/tv_user_area"
+                        style="@style/tv_user_right"
+                        android:text="@string/user_area"
+                        />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2px"
+                    android:background="@color/white"/>
+
+                <LinearLayout
+                    style="@style/ll_user"
+                    >
+
+                    <TextView
+                        style="@style/tv_user_left"
+                        android:drawableLeft="@mipmap/icon_user_color6"
+                        android:text="@string/user_update"/>
+
+                    <TextView
+                        android:id="@+id/tv_user_update"
+                        style="@style/tv_user_right"
+                        android:text="@string/user_update"
+                        />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2px"
+                    android:background="@color/white"/>
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btnUserCancel"
+                android:layout_width="match_parent"
+                android:layout_height="80px"
+                android:layout_marginLeft="40px"
+                android:layout_marginRight="40px"
+                android:background="@drawable/button_bg_cancel"
+                android:text="注　　销"
+                android:textColor="#fff"
+                android:textSize="32px"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:gravity="right"
+                android:layout_marginRight="60px"
+                android:layout_marginTop="30px"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:text="语音技术由科大讯飞提供"
+                    style="@style/tv_user_right"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:id="@+id/tvResetPassword"
+                    android:text="更改密码"
+                    style="@style/tv_user_right"
+                    android:layout_width="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+        </LinearLayout>
+
+    </ScrollView>
+</LinearLayout>

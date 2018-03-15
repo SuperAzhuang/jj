@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="vertical"
+              android:paddingBottom="5dp"
+              android:paddingLeft="5dp"
+              android:paddingRight="5dp"
+              android:paddingTop="5dp">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_xuxian"
+        android:orientation="vertical"
+        android:padding="10px">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10px"
+            android:gravity="center_vertical|left"
+            android:orientation="horizontal"
+            android:paddingLeft="10px"
+            android:paddingRight="10px">
+
+            <ImageView
+                style="@style/img_customer_details"
+                android:src="@mipmap/icon_details_c13"/>
+
+            <TextView
+                style="@style/tv_customer_details"
+                android:text="表位(GPS):"
+                />
+
+
+            <Button
+                android:id="@+id/btnGetLocation"
+                style="@style/btn_dialog_red"
+                android:layout_width="120px"
+                android:layout_height="60px"
+                android:layout_marginLeft="30px"
+                android:text="@string/huoqu"
+                android:textSize="28px"/>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tvLocation"
+            style="@style/edt_customer_details"
+            android:layout_width="match_parent"
+            android:layout_height="60px"
+            android:layout_marginLeft="10px"
+            android:layout_marginRight="10px"
+            android:layout_marginTop="10px"
+            android:gravity="center_vertical|left"
+            android:text="26.232326562,114.585656565623"
+            />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_marginTop="10px"
+            android:background="@color/white"></View>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10px"
+            android:gravity="center_vertical|left"
+            android:orientation="horizontal"
+            android:paddingLeft="10px"
+            android:paddingRight="10px">
+
+            <ImageView
+                style="@style/img_customer_details"
+                android:src="@mipmap/icon_details_c14"/>
+
+            <TextView
+                style="@style/tv_cbgl_details"
+                android:text="本期起码:"
+                />
+
+            <TextView
+                android:id="@+id/tvSQDS"
+                style="@style/edt_customer_details"
+                android:layout_width="200px"
+                android:layout_height="60px"
+                android:gravity="center_vertical"
+                />
+
+            <ImageView
+                style="@style/img_customer_details"
+                android:layout_marginLeft="5px"
+                android:src="@mipmap/icon_details_c16"/>
+
+            <TextView
+                style="@style/tv_cbgl_details"
+                android:text="水量:"
+                />
+
+            <TextView
+                android:id="@+id/tvYield"
+                style="@style/edt_customer_details"
+                android:gravity="center_vertical"
+                android:layout_width="200px"
+                android:layout_height="60px"
+                />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_marginTop="10px"
+            android:background="@color/white"></View>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10px"
+            android:gravity="center_vertical|left"
+            android:orientation="horizontal"
+            android:paddingLeft="10px"
+            android:paddingRight="10px">
+
+            <ImageView
+                style="@style/img_customer_details"
+                android:src="@mipmap/icon_details_c15"/>
+
+            <TextView
+                style="@style/tv_cbgl_details"
+                android:text="本期止码:"
+                />
+
+            <EditText
+                android:id="@+id/etCheckCode"
+                style="@style/edt_customer_details"
+                android:layout_width="200px"
+                android:layout_height="60px"
+                android:inputType="number"
+                />
+
+            <ImageView
+                style="@style/img_customer_details"
+                android:layout_marginLeft="5px"
+                android:src="@mipmap/icon_details_c25"/>
+
+            <TextView
+                style="@style/tv_cbgl_details"
+                android:text="表况:"
+                />
+
+            <Spinner
+                android:id="@+id/spinner_bk"
+                android:layout_width="match_parent"
+                android:layout_height="60px"
+                android:layout_marginLeft="10px"
+                android:background="@mipmap/bg_cbgl_details_spinner"
+                android:gravity="center"
+                android:scrollbars="none"
+                android:spinnerMode="dialog"
+                ></Spinner>
+
+            <RadioGroup
+                android:id="@+id/rgChaoBiaoState"
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:visibility="gone"
+                android:layout_height="match_parent">
+
+                <RadioButton
+                    android:id="@+id/rbShiChao"
+                    style="@style/rb_customer_details"
+                    android:checked="true"
+                    android:text="实抄"/>
+
+                <RadioButton
+                    android:id="@+id/rbGuChao"
+                    style="@style/rb_customer_details"
+                    android:checked="false"
+                    android:text="估抄"/>
+            </RadioGroup>
+
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_marginTop="10px"
+            android:background="@color/white"></View>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20px"
+            android:layout_marginTop="10px"
+            android:gravity="center_vertical|left"
+            android:orientation="horizontal"
+            android:paddingLeft="10px"
+            android:paddingRight="10px">
+
+            <ImageView
+                style="@style/img_customer_details"
+                android:src="@mipmap/icon_details_c26"/>
+
+            <TextView
+                style="@style/tv_cbgl_details"
+                android:text="水　　费:"
+                />
+
+            <TextView
+                android:id="@+id/tvFee"
+                style="@style/edt_customer_details"
+                android:gravity="center_vertical"
+                android:layout_width="200px"
+                android:layout_height="60px"
+                />
+            <Button
+                android:id="@+id/btnFee"
+                style="@style/btn_dialog_red"
+                android:layout_width="120px"
+                android:layout_height="60px"
+                android:layout_marginLeft="30px"
+                android:text="更新"
+                android:textSize="28px"/>
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,235 @@
+package com.feihua.jjcb.phone.callback;
+
+import com.feihua.jjcb.phone.utils.StringUtils;
+
+import java.io.Serializable;
+
+/**
+ * Created by wcj on 2016-03-30.
+ */
+public class ChaoBiaoTables implements Serializable
+{
+    public String VOLUME_NO;//册号
+    public String USERB_KH;//户号
+    public String USERB_HM;//户名
+    public String USERB_ADDR;//地址
+    public String USERB_DH;//电话
+    public String USERB_MT;//手机
+    public String METERC_CALIBRE;//口径
+    public String WATERM_TYPE;//表型
+    public String METERC_BASIC;//基本吨
+    public String USERB_YSXZ;//用水性质/比例
+    public String USERB_CUP;//水价
+    public String WATERM_AZRQ;//安装日期
+    public String USERB_LHRQ;//报装日期
+    public String WATERM_NX;//现用水表年限
+    public String WATERM_NO;//表号
+    public String USERB_SQDS;//本期起码
+    public String USERB_JBH;//抄表序号
+    public String GPS;//GPS
+    public String WATERM_CHECK_CODE;//止码
+    public String WATERM_YIELD;//水量
+    public String IS_UPDATA;//上传状态
+    public String IS_SAVE;//抄表状态
+    public String Q3Q;//平均3个月用水量
+    public String WATERM_REPDATE;//换表日期
+    public String USERB_YHLX;//用户类型
+    public String WATERT_NAME;//用户类型
+    public String WATERU_YEAR;//抄表年
+    public String WATERU_MONTH;//抄表月
+    public String TIME;//手机抄表时间
+    public String WATER_BK;//表况
+    public String IS_CBWAY;//实抄1估抄0
+    public String AREA_NO;//片区
+    public String WATERU_QAN;//水量-条件查询
+    public String USERB_LXR;//联系人-条件查询
+    public String USERB_TOTAL;//户籍人数-条件查询
+    public String USERB_BQDS;//本期止码-条件查询
+    public String SC;//上传状态-表册下载
+
+    public String getSC()
+    {
+        return SC == null ? "" : SC;
+    }
+
+    public String getUSERB_BQDS()
+    {
+        return USERB_BQDS == null ? "" : USERB_BQDS;
+    }
+
+    public String getUSERB_TOTAL()
+    {
+        return USERB_TOTAL == null ? "" : USERB_TOTAL;
+    }
+
+    public String getUSERB_LXR()
+    {
+        return USERB_LXR == null ? "" : USERB_LXR;
+    }
+
+
+    public String getAREA_NO()
+    {
+        return AREA_NO == null ? "" : AREA_NO;
+    }
+
+    public String getWATER_BK()
+    {
+        return WATER_BK == null ? "" : WATER_BK;
+    }
+
+    public String getIS_CBWAY()
+    {
+        return IS_CBWAY == null ? "1" : IS_CBWAY;
+    }
+
+    public String getVOLUME_NO()
+    {
+        return VOLUME_NO == null ? "" : VOLUME_NO;
+    }
+
+    public String getUSERB_KH()
+    {
+        return USERB_KH == null ? "" : USERB_KH;
+    }
+
+    public String getUSERB_HM()
+    {
+        return USERB_HM == null ? "" : USERB_HM;
+    }
+
+    public String getUSERB_ADDR()
+    {
+        return USERB_ADDR == null ? "" : USERB_ADDR;
+    }
+
+    public String getUSERB_DH()
+    {
+        return USERB_DH == null ? "" : USERB_DH;
+    }
+
+    public String getUSERB_MT()
+    {
+        return USERB_MT == null ? "" : USERB_MT;
+    }
+
+    public String getMETERC_CALIBRE()
+    {
+        return METERC_CALIBRE == null ? "" : METERC_CALIBRE;
+    }
+
+    public String getWATERM_TYPE()
+    {
+        return WATERM_TYPE == null ? "" : WATERM_TYPE;
+    }
+
+    public String getMETERC_BASIC()
+    {
+        return METERC_BASIC == null ? "" : METERC_BASIC;
+    }
+
+    public String getWATERU_QAN()
+    {
+        return WATERU_QAN == null ? "" : WATERU_QAN;
+    }
+
+    public String getUSERB_YSXZ()
+    {
+        return USERB_YSXZ == null ? "" : USERB_YSXZ;
+    }
+
+    public String getUSERB_CUP()
+    {
+        return USERB_CUP == null ? "" : USERB_CUP;
+    }
+
+    public String getWATERM_AZRQ()
+    {
+        return WATERM_AZRQ == null ? "" : WATERM_AZRQ;
+    }
+
+    public String getUSERB_LHRQ()
+    {
+        return USERB_LHRQ == null ? "" : USERB_LHRQ;
+    }
+
+    public String getWATERM_NX()
+    {
+        return WATERM_NX == null ? "" : WATERM_NX;
+    }
+
+    public String getWATERM_NO()
+    {
+        return WATERM_NO == null ? "" : WATERM_NO;
+    }
+
+    public String getUSERB_SQDS()
+    {
+        return USERB_SQDS == null ? "" : USERB_SQDS;
+    }
+
+    public String getUSERB_JBH()
+    {
+        return USERB_JBH == null ? "" : USERB_JBH;
+    }
+
+    public String getGPS()
+    {
+        return GPS == null ? "" : GPS;
+    }
+
+    public String getWATERM_CHECK_CODE()
+    {
+        return WATERM_CHECK_CODE == null ? "" : WATERM_CHECK_CODE;
+    }
+
+    public String getWATERM_YIELD()
+    {
+        return WATERM_YIELD == null ? "" : WATERM_YIELD;
+    }
+
+    public String getIS_UPDATA()
+    {
+        return IS_UPDATA == null ? "" : IS_UPDATA;
+    }
+
+    public String getIS_SAVE()
+    {
+        return IS_SAVE == null ? "" : IS_SAVE;
+    }
+
+    public String getQ3Q()
+    {
+        return Q3Q == null ? "" : Q3Q;
+    }
+
+    public String getWATERM_REPDATE()
+    {
+        return WATERM_REPDATE == null ? "" : WATERM_REPDATE;
+    }
+
+    public String getUSERB_YHLX()
+    {
+        return USERB_YHLX == null ? "" : USERB_YHLX;
+    }
+
+    public String getWATERU_YEAR()
+    {
+        return WATERU_YEAR == null ? "" : WATERU_YEAR;
+    }
+
+    public String getWATERU_MONTH()
+    {
+        return WATERU_MONTH == null ? "" : WATERU_MONTH;
+    }
+
+    public String getTIME()
+    {
+        return TIME == null ? "" : TIME;
+    }
+
+    public String getWATERT_NAME()
+    {
+        return WATERT_NAME == null ? "" : WATERT_NAME;
+    }
+}

@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@mipmap/bg_login"
+    android:orientation="vertical"
+    tools:context="com.feihua.jjcb.phone.ui.WaterFeeActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="96px">
+
+        <ImageButton
+            android:id="@+id/btn_left"
+            android:layout_width="96px"
+            android:layout_height="96px"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/selector_back_bg"
+            android:src="@mipmap/icon_back"/>
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:gravity="center">
+
+            <LinearLayout
+                android:id="@+id/layoutTitle"
+                android:layout_width="440px"
+                android:layout_height="60px"
+                android:background="@mipmap/img_water_fee_title_1">
+
+                <TextView
+                    android:id="@+id/tvCB"
+                    style="@style/tv_title_cx"
+                    android:layout_width="0px"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="抄表情况"/>
+
+                <TextView
+                    android:id="@+id/tvSF"
+                    style="@style/tv_title_cx"
+                    android:layout_width="0px"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="水费情况"/>
+
+                <TextView
+                    android:id="@+id/tvQF"
+                    style="@style/tv_title_cx"
+                    android:layout_width="0px"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="欠费情况"/>
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60px"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="120px"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/previous"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="上一年"
+                android:textColor="@color/white"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0px"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/tvHM"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="户名:"
+                android:textColor="@color/white"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="120px"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/next"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="下一年"
+                android:textColor="@color/white"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <com.feihua.jjcb.phone.view.NoScrollViewPager
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </com.feihua.jjcb.phone.view.NoScrollViewPager>
+
+</LinearLayout>

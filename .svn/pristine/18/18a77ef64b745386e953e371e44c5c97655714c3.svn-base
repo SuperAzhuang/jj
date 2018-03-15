@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="horizontal"
+              android:paddingBottom="10dp"
+              android:paddingRight="10dp"
+              android:paddingTop="10dp">
+
+    <LinearLayout
+        android:id="@+id/item_ll_pie"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:orientation="vertical"></LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="@mipmap/bg_item_cbgl"
+        android:gravity="center"
+        android:padding="10dp">
+
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            >
+
+            <TextView
+                android:id="@+id/tv_item_cehao"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:layout_toLeftOf="@+id/tv_item_state"
+                android:drawableLeft="@mipmap/icon_cbgl_item1"
+                android:drawablePadding="5dp"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:text="东区中片东区101"
+                android:textColor="@color/text_defult_color_grey"
+                android:textSize="14sp"
+                />
+
+            <TextView
+                android:id="@+id/tv_item_state"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:drawableLeft="@mipmap/icon_cbgl_item2"
+                android:drawablePadding="5dp"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:text="状态:已上传"
+                android:textColor="@color/text_defult_color_grey"
+                android:textSize="14sp"
+                />
+
+            <TextView
+                android:id="@+id/tv_item_total"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@+id/tv_item_cehao"
+                android:layout_marginTop="10dp"
+                android:layout_toLeftOf="@+id/tv_item_yichao"
+                android:drawableLeft="@mipmap/icon_cbgl_item3"
+                android:drawablePadding="5dp"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:text="总表数:456"
+                android:textColor="@color/text_defult_color_grey"
+                android:textSize="14sp"
+                />
+
+            <TextView
+                android:id="@+id/tv_item_yichao"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/tv_item_state"
+                android:layout_marginTop="10dp"
+                android:drawableLeft="@mipmap/icon_cbgl_item4"
+                android:drawablePadding="5dp"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:text="已抄表数:16"
+                android:textColor="@color/text_defult_color_grey"
+                android:textSize="14sp"
+                />
+        </RelativeLayout>
+    </LinearLayout>
+</LinearLayout>

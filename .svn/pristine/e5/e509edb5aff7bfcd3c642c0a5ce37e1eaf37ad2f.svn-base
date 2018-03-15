@@ -1,0 +1,35 @@
+package com.feihua.jjcb.phone;
+
+import android.app.Activity;
+import android.os.Bundle;
+import android.text.AndroidCharacter;
+import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
+import android.widget.SpinnerAdapter;
+
+/*
+* 异常上报
+* */
+public class ErrorReportActivity extends BaseActivity
+{
+
+    private Spinner mSpinner_bk;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState)
+    {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_error_report);
+        initView();
+    }
+
+    private void initView()
+    {
+        mSpinner_bk = (Spinner) findViewById(R.id.spinner_bk);
+        String[] mBKList = {"表况一", "表况二", "表况三", "表况四"};
+        ArrayAdapter<String> mBKadapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, mBKList);
+        mBKadapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        mSpinner_bk.setAdapter(mBKadapter);
+    }
+}

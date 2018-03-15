@@ -1,0 +1,108 @@
+package com.feihua.jjcb.phone.fragment;
+
+import android.app.Dialog;
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.TextView;
+
+import com.feihua.jjcb.phone.Adapter.CBGLbaseAdapter;
+import com.feihua.jjcb.phone.CBGLListActivity;
+import com.feihua.jjcb.phone.R;
+import com.feihua.jjcb.phone.application.Constants;
+import com.feihua.jjcb.phone.utils.DensityUtil;
+import com.feihua.jjcb.phone.utils.SharedPreUtils;
+
+import org.achartengine.GraphicalView;
+
+/**
+ * 抄表管理
+ * Created by wcj on 2016-03-02.
+ */
+public class CBGLfragment extends Fragment implements View.OnClickListener, AdapterView.OnItemClickListener
+{
+
+    private View layout;
+    private GraphicalView graphicalView;
+    private LinearLayout llll;
+    private ListView mLv_cbgl;
+
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+    {
+        SharedPreUtils.putString(Constants.LAST_FRAGMENT, "CBGLfragment", getActivity());
+        layout = inflater.inflate(R.layout.layout_cbgl, null, false);
+        initView();
+        return layout;
+    }
+
+    private void initView()
+    {
+        CBGLbaseAdapter mCBGLadapter = new CBGLbaseAdapter(getActivity());
+        mLv_cbgl = (ListView) layout.findViewById(R.id.lv_cbgl);
+        mLv_cbgl.setAdapter(mCBGLadapter);
+        layout.findViewById(R.id.btn_right).setOnClickListener(this);
+        mLv_cbgl.setOnItemClickListener(this);
+    }
+
+
+    @Override
+    public void onClick(View v)
+    {
+        switch (v.getId())
+        {
+            case R.id.btn_right:
+                onclickDownload();
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void onclickDownload()
+    {
+        //访问服务端是否有新的下载任务,有就弹出下载框,没有就文字提示
+        final Dialog dialog = new Dialog(getActivity(), R.style.Theme_Dialog);
+        View layout = getActivity().getLayoutInflater().inflate(R.layout.dialog_download, null);
+        int cFullFillWidth = DensityUtil.dip2px(getActivity(), 300);
+        TextView tv_dialog_cehao = (TextView) layout.findViewById(R.id.tv_dialog_cehao);
+        layout.findViewById(R.id.btn_dialog_confirm).setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                //下载表册
+            }
+        });
+        layout.findViewById(R.id.btn_dialog_cancel).setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                dialog.dismiss();
+            }
+        });
+        layout.setMinimumWidth(cFullFillWidth);
+        dialog.setContentView(layout);
+        dialog.setCancelable(false);
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.show();
+
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+    {
+        Intent intent = new Intent(getActivity(), CBGLListActivity.class);
+        startActivity(intent);
+        getActivity().overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+    }
+}

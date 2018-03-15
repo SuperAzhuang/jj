@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:background="@drawable/selector_back_bg"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@mipmap/bg_item_xuxian"
+        android:orientation="horizontal"
+        android:paddingBottom="20dp"
+        android:paddingLeft="40dp"
+        android:paddingRight="20dp"
+        android:paddingTop="20dp">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="center_vertical|left"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_item_name"
+                style="@style/tv_item_cbgl"
+                android:text="户名:"/>
+
+            <TextView
+                style="@style/tv_item_cbgl"
+                android:layout_marginTop="4dp"
+                android:text="电话:"/>
+
+            <TextView
+                style="@style/tv_item_cbgl"
+                android:layout_marginTop="4dp"
+                android:text="手机:"/>
+
+            <TextView
+                style="@style/tv_item_cbgl"
+                android:layout_marginTop="4dp"
+                android:text="地址:"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="center_vertical|left"
+            android:orientation="vertical"
+            >
+
+            <TextView
+                style="@style/tv_item_cbgl"
+                android:text="上传状态:"/>
+
+            <TextView
+                style="@style/tv_item_cbgl"
+                android:layout_marginTop="4dp"
+                android:text="本期起码:"/>
+
+            <TextView
+                style="@style/tv_item_cbgl"
+                android:layout_marginTop="4dp"
+                android:text="本期止码:"/>
+
+            <TextView
+                style="@style/tv_item_cbgl"
+                android:layout_marginTop="4dp"
+                android:text="水量:"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_item_huhao"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:background="@mipmap/bg_tv_semicircle"
+        android:gravity="center_vertical|left"
+        android:paddingLeft="4dp"
+        android:text="0"/>
+
+
+</FrameLayout>

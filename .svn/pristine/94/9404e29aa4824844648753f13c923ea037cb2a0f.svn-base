@@ -1,0 +1,85 @@
+package com.feihua.jjcb.phone.service;
+
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.util.Log;
+
+import com.feihua.jjcb.phone.callback.NotObjCommonCallback;
+import com.feihua.jjcb.phone.constants.Constants;
+import com.feihua.jjcb.phone.utils.SharedPreUtils;
+import com.zhy.http.okhttp.OkHttpUtils;
+
+public class TargetReceiver extends BroadcastReceiver
+{
+    public TargetReceiver()
+    {
+    }
+
+    @Override
+    public void onReceive(Context context, Intent intent)
+    {
+        if (intent.getAction().equals("com.feihua.jjcb.service.destroy"))
+        {
+            //TODO
+            //在这里写重新启动service的相关操作
+            startUploadService(context);
+        }
+        else if (intent.getAction().equals("com.feihua.jjcb.service.location.token"))
+        {
+            getLoginToken(context);
+        }
+    }
+
+    private void startUploadService(Context context)
+    {
+        Intent i = new Intent();
+        i.setClass(context, TargetService.class);
+        context.startService(i);
+    }
+
+    private void getLoginToken(final Context context)
+    {
+        Log.w("TargetService", "com.feihua.jjcb.service.location.token");
+        String loginTokens = SharedPreUtils.getString(Constants.LOGIN_TOKENS, context);
+        String USER_ID = SharedPreUtils.getString(Constants.USER_ID, context);
+        OkHttpUtils.post()//
+                .url(Constants.USER_IS_KICK)//
+                .addParams("USER_ID", USER_ID)//
+                .addParams("LOGIN_TOKENS", loginTokens)//
+                .build()//
+                .execute(new NotObjCommonCallback()
+                {
+                    @Override
+                    public void onNetworkError(boolean isNetwork, String error)
+                    {
+                        Log.w("TargetService", "onNetworkError");
+                        if (isNetwork)
+                        {
+
+                        }
+                        else
+                        {
+                            Log.w("TargetService", "isNetwork = " + isNetwork);
+                            if ("您被踢下线！".equals(error))
+                            {
+                                Log.w("TargetService", "您被踢下线了！");
+//                                if (locationClient.isStarted())
+//                                {
+//                                    Log.w("TargetService", "stopLocation");
+//                                    locationClient.stopLocation();
+//                                }
+                                SharedPreUtils.putBoolean(Constants.IS_LOGIN, false, context);
+//                                uploadServer();
+                                context.sendBroadcast(new Intent(Constants.LOGINTOKEN_ERROR_SERVICE));
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onResponse(Boolean isSuccess)
+                    {
+                    }
+                });
+    }
+}

@@ -1,0 +1,198 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:gravity="center_horizontal"
+              android:orientation="vertical"
+              tools:context="com.feihua.jjcb.phone.ui.ResetActivity">
+
+    <RelativeLayout
+        android:id="@+id/rl_titlebar"
+        android:layout_width="match_parent"
+        android:layout_height="96px"
+        android:layout_alignParentTop="true"
+        android:background="@color/colorPrimaryDark"
+        >
+
+        <ImageButton
+            android:id="@+id/btn_left"
+            android:layout_width="96px"
+            android:layout_height="96px"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/selector_back_bg"
+            android:src="@mipmap/icon_back"/>
+
+        <TextView
+            android:id="@+id/head_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="修改密码"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="bold"/>
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2px"
+        android:layout_below="@+id/rl_titlebar"
+        android:background="@color/white"></View>
+
+    <LinearLayout
+        android:id="@+id/resetLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:divider="@drawable/line_gray"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:paddingLeft="40px"
+        android:paddingRight="40px"
+        android:showDividers="middle">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="120px"
+            android:gravity="center_vertical">
+
+            <TextView
+                style="@style/tv_reset_text"
+                android:layout_width="160px"
+                android:layout_height="wrap_content"
+                android:text="旧密码:"/>
+
+            <EditText
+                android:id="@+id/etOldPassword"
+                style="@style/tv_reset_text"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@null"
+                android:hint="@string/reset_old_password"
+                android:inputType="textPassword"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="120px"
+            android:gravity="center_vertical">
+
+            <TextView
+                style="@style/tv_reset_text"
+                android:layout_width="160px"
+                android:layout_height="wrap_content"
+                android:text="新密码:"/>
+
+            <EditText
+                android:id="@+id/etNewPassword"
+                style="@style/tv_reset_text"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@null"
+                android:hint="@string/reset_new_password"
+                android:inputType="textPassword"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="120px"
+            android:gravity="center_vertical">
+
+            <TextView
+                style="@style/tv_reset_text"
+                android:layout_width="160px"
+                android:layout_height="wrap_content"
+                android:text="确认密码:"/>
+
+            <EditText
+                android:id="@+id/etVerifyPassword"
+                style="@style/tv_reset_text"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@null"
+                android:hint="@string/reset_verify_password"
+                android:inputType="textPassword"/>
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btnCommit"
+            android:layout_width="match_parent"
+            android:layout_height="100px"
+            android:layout_marginLeft="60px"
+            android:layout_marginRight="60px"
+            android:layout_marginTop="120px"
+            android:background="@drawable/btn_blue"
+            android:text="确　认"
+            android:textColor="@color/white"
+            android:textSize="34px"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/resultLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="120px"
+            android:text="恭喜你，密码修改成功！"
+            android:textSize="34px"/>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="2px"
+            android:layout_marginTop="30px"
+            android:src="@mipmap/img_reset_line"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30px"
+            android:text="为了你的账户安全"
+            android:textColor="#cdcdcd"
+            android:textSize="30px"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="请牢记登录密码并妥善保管"
+            android:textColor="#cdcdcd"
+            android:textSize="30px"/>
+
+        <Button
+            android:id="@+id/btnLogin"
+            android:layout_width="match_parent"
+            android:layout_height="100px"
+            android:layout_marginLeft="60px"
+            android:layout_marginRight="60px"
+            android:layout_marginTop="120px"
+            android:background="@drawable/btn_blue"
+            android:text="马上登录"
+            android:textColor="@color/white"
+            android:textSize="34px"/>
+
+        <Button
+            android:id="@+id/btnBack"
+            android:layout_width="match_parent"
+            android:layout_height="100px"
+            android:layout_marginLeft="60px"
+            android:layout_marginRight="60px"
+            android:layout_marginTop="40px"
+            android:background="@drawable/btn_gray"
+            android:text="返回首页"
+            android:textColor="@color/white"
+            android:textSize="34px"/>
+
+    </LinearLayout>
+
+
+</LinearLayout>

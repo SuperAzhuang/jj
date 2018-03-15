@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:gravity="center_horizontal"
+              android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20px">
+
+        <LinearLayout
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingBottom="10px"
+                android:paddingLeft="15px"
+                android:paddingRight="7px"
+                android:paddingTop="5px">
+
+                <TextView
+                    style="@style/tv_tjcx_text_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="所属区域:"/>
+
+                <Spinner
+                    android:id="@+id/spinnerQy"
+                    style="@style/spinner_custom"
+                    android:background="@drawable/img_tjcx_spinner_bg"
+                    android:spinnerMode="dropdown"/>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingBottom="5px"
+                android:paddingLeft="15px"
+                android:paddingRight="7px"
+                android:paddingTop="10px">
+
+
+                <TextView
+                    style="@style/tv_tjcx_text_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="收费方式:"/>
+
+                <Spinner
+                    android:id="@+id/spinnerFs"
+                    style="@style/spinner_custom"
+                    android:background="@drawable/img_tjcx_spinner_bg"
+                    android:scrollbars="none"
+                    android:spinnerMode="dropdown"/>
+
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:layout_weight="4"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingBottom="10px"
+                android:paddingLeft="7px"
+                android:paddingRight="15px"
+                android:paddingTop="5px">
+
+                <TextView
+                    style="@style/tv_tjcx_text_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="所属片区:"/>
+
+
+                <Spinner
+                    android:id="@+id/spinnerPq"
+                    style="@style/spinner_custom"
+                    android:background="@drawable/img_tjcx_spinner_bg"
+                    android:scrollbars="none"
+                    android:spinnerMode="dropdown"/>
+
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingBottom="5px"
+                android:paddingLeft="7px"
+                android:paddingRight="15px"
+                android:paddingTop="10px">
+
+                <TextView
+                    style="@style/tv_tjcx_text_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="用水性质:"/>
+
+                <Spinner
+                    android:id="@+id/spinnerXz"
+                    style="@style/spinner_custom"
+                    android:background="@drawable/img_tjcx_spinner_bg"
+                    android:scrollbars="none"
+                    android:spinnerMode="dropdown"/>
+
+
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btnQuery"
+        android:layout_width="360px"
+        android:layout_height="60px"
+        android:layout_marginTop="20px"
+        android:background="@drawable/btn_yellow"
+        android:text="查　　询"
+        android:textColor="@color/white"
+        android:textSize="34px"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="70px"
+        android:layout_marginTop="20px"
+        android:background="#e89800"
+        android:gravity="center_vertical">
+
+        <TextView
+            style="@style/tv_tjcx_text_title"
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:gravity="center"
+            android:text="户号"/>
+
+        <TextView
+            style="@style/tv_tjcx_text_title"
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:gravity="center"
+            android:text="户名"/>
+
+        <TextView
+            style="@style/tv_tjcx_text_title"
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:gravity="center"
+            android:text="用水性质"/>
+
+        <TextView
+            style="@style/tv_tjcx_text_title"
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:gravity="center"
+            android:text="水量"/>
+
+
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/lvTjcx"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </ListView>
+</LinearLayout>

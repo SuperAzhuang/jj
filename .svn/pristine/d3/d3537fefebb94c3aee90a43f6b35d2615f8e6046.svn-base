@@ -1,0 +1,10 @@
+package com.feihua.jjcb.phone.application;
+
+/**
+ * Created by wcj on 2016-03-03.
+ */
+public interface Constants
+{
+    public static final String SETTING_DB_NAME = "com.feihua.jjcb.phone.sp";
+    public static final String LAST_FRAGMENT = "lastfragment";
+}

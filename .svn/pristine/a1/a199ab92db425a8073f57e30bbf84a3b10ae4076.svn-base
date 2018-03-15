@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@mipmap/bg_login"
+    android:orientation="vertical"
+    android:clickable="true"
+    tools:context=".ui.CBGLDetailsActivity">
+
+
+
+    <ListView
+        android:id="@+id/lv_customer_details"
+        android:layout_width="match_parent"
+        android:layout_height="0px"
+        android:layout_weight="1"
+        android:cacheColorHint="@color/transparent"
+        android:divider="@color/white"
+        android:dividerHeight="1px"
+        android:fadingEdge="none"
+        android:listSelector="@color/transparent"
+        android:scrollbars="none">
+    </ListView>
+
+    <include
+        android:id="@+id/layoutFootView"
+        layout="@layout/footview_cbgl_details"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        />
+
+    <LinearLayout
+        android:id="@+id/ll_bottombar"
+        android:layout_width="match_parent"
+        android:layout_height="110px"
+        android:background="#034984"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="20px"
+        android:paddingRight="20px"
+        >
+        <Button
+            android:id="@+id/btn_updata"
+            style="@style/btn_details_yellow"
+            android:layout_weight="2"
+            android:text="上　传"/>
+
+        <Button
+            android:id="@+id/btn_save"
+            style="@style/btn_details_yellow"
+            android:layout_marginLeft="20px"
+            android:layout_weight="2"
+            android:text="储　存"/>
+
+
+
+        <Button
+            android:id="@+id/btn_error_report"
+            style="@style/btn_details_yellow"
+            android:layout_marginLeft="20px"
+            android:layout_weight="2"
+            android:text="异常上报"/>
+    </LinearLayout>
+</LinearLayout>

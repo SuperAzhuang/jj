@@ -1,0 +1,333 @@
+package com.feihua.jjcb.phone.fragment;
+
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.text.TextUtils;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.Spinner;
+
+import com.feihua.jjcb.phone.Adapter.TJCXListViewAdapter;
+import com.feihua.jjcb.phone.R;
+import com.feihua.jjcb.phone.bean.Datadic;
+import com.feihua.jjcb.phone.bean.Org;
+import com.feihua.jjcb.phone.bean.PianQuBean;
+import com.feihua.jjcb.phone.bean.TJCXListBean;
+import com.feihua.jjcb.phone.bean.TJCXTypeBean;
+import com.feihua.jjcb.phone.bean.Watert;
+import com.feihua.jjcb.phone.callback.ChaoBiaoTables;
+import com.feihua.jjcb.phone.callback.CommonCallback;
+import com.feihua.jjcb.phone.constants.Constants;
+import com.feihua.jjcb.phone.ui.LoginActivity;
+import com.feihua.jjcb.phone.ui.QueryDetailsActivity;
+import com.feihua.jjcb.phone.utils.AreaUtil;
+import com.feihua.jjcb.phone.utils.ToastUtil;
+import com.feihua.jjcb.phone.view.ProgressDialogBar;
+import com.google.gson.Gson;
+import com.zhy.http.okhttp.OkHttpUtils;
+
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * Created by wcj on 2016-04-15.
+ */
+public class TJCXFragment extends BaseFragment implements View.OnClickListener, AdapterView.OnItemClickListener
+{
+
+    private ListView mListView;
+    private List<ChaoBiaoTables> datasList;
+    private TJCXListViewAdapter adapter;
+    private Spinner spinnerQy;
+    private Spinner spinnerPq;
+    private Spinner spinnerXz;
+    private Spinner spinnerFs;
+    private List<Org> orgList;
+    private List<Org> pqList;
+    private List<Datadic> datadicList;
+    private List<Watert> watertList;
+    private String orgNo = "";
+    private String pqOrgNo = "";
+    private String datadicValue = "";
+    private String watertNo = "";
+
+    @Override
+    public int getLayoutId()
+    {
+        return R.layout.layout_tjcx;
+    }
+
+    @Override
+    public void initList()
+    {
+        datasList = new ArrayList<ChaoBiaoTables>();
+    }
+
+    //设置Spinner数据
+    private void initSpinnerInfo(TJCXTypeBean bean)
+    {
+        orgList = bean.qy;
+        pqList = bean.pq;
+        datadicList = bean.sffs;
+        watertList = bean.yhlx;
+        if (orgList != null)
+        {
+            ArrayList<String> list = new ArrayList<>();
+            for (Org org : orgList)
+            {
+                list.add(org.org_name);
+            }
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(ctx, R.layout.simple_spinner_item, list);
+            spinnerQy.setAdapter(adapter);
+            adapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item);
+        }
+        initSpinnerPQ();
+        if (datadicList != null)
+        {
+            ArrayList<String> list = new ArrayList<>();
+            for (Datadic datadic : datadicList)
+            {
+                list.add(datadic.getDatadic_name());
+            }
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(ctx, R.layout.simple_spinner_item, list);
+            spinnerFs.setAdapter(adapter);
+            adapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item);
+        }
+        if (watertList != null)
+        {
+            ArrayList<String> list = new ArrayList<>();
+            for (Watert watert : watertList)
+            {
+                list.add(watert.watert_name);
+            }
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(ctx, R.layout.simple_spinner_item, list);
+            spinnerXz.setAdapter(adapter);
+            adapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item);
+        }
+    }
+
+    private void initSpinnerPQ()
+    {
+        if (pqList != null)
+        {
+            ArrayList<String> list = new ArrayList<>();
+            for (Org org : pqList)
+            {
+                list.add(org.org_name);
+            }
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(ctx, R.layout.simple_spinner_item, list);
+            spinnerPq.setAdapter(adapter);
+            adapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item);
+        }
+    }
+
+    @Override
+    public void initViews(View layout)
+    {
+        mProgressBar.setProgressMsg(getResources().getString(R.string.progress_loading));
+        spinnerQy = (Spinner) layout.findViewById(R.id.spinnerQy);
+        spinnerPq = (Spinner) layout.findViewById(R.id.spinnerPq);
+        spinnerXz = (Spinner) layout.findViewById(R.id.spinnerXz);
+        spinnerFs = (Spinner) layout.findViewById(R.id.spinnerFs);
+        layout.findViewById(R.id.btnQuery).setOnClickListener(this);
+        mListView = (ListView) layout.findViewById(R.id.lvTjcx);
+        adapter = new TJCXListViewAdapter(ctx, datasList, R.layout.listitem_tjcx);
+        mListView.setAdapter(adapter);
+        mListView.setOnItemClickListener(this);
+
+        spinnerQy.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
+        {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
+            {
+                orgNo = orgList.get(position).org_no;
+                doPianQuList(orgNo);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent)
+            {
+
+            }
+        });
+        spinnerPq.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
+        {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
+            {
+                pqOrgNo = pqList.get(position).org_no;
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent)
+            {
+
+            }
+        });
+        spinnerXz.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
+        {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
+            {
+                watertNo = watertList.get(position).watert_no;
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent)
+            {
+
+            }
+        });
+        spinnerFs.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
+        {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
+            {
+                datadicValue = datadicList.get(position).getDatadic_value();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent)
+            {
+
+            }
+        });
+    }
+
+    @Override
+    public void initDatas()
+    {
+        AreaUtil.getInstance().getArea(new AreaUtil.OnDataListener()
+        {
+            @Override
+            public void onData(TJCXTypeBean bean)
+            {
+                initSpinnerInfo(bean);
+            }
+        });
+    }
+
+    private void doPianQuList(String orgNo)
+    {
+
+        OkHttpUtils.post()//
+                .url(Constants.GET_SUPER_NO)//
+                .addParams("ORG_NO", orgNo)//
+                .build()//
+                .execute(new CommonCallback()
+                {
+                    @Override
+                    public void onNetworkError(boolean isNetwork, String error)
+                    {
+                        if (isNetwork)
+                        {
+                            ToastUtil.showShortToast(R.string.toast_network_anomalies);
+                        }
+                        else
+                        {
+                            ToastUtil.showShortToast(error);
+                        }
+
+                    }
+
+                    @Override
+                    public void onResponse(String datas)
+                    {
+                        if (!TextUtils.isEmpty(datas))
+                        {
+                            PianQuBean bean = new Gson().fromJson(datas, PianQuBean.class);
+                            pqList = bean.pq;
+                            initSpinnerPQ();
+                        }
+                    }
+                });
+    }
+
+    @Override
+    public void onClick(View v)
+    {
+        switch (v.getId())
+        {
+            case R.id.btnQuery:
+                doQuery();
+                break;
+            default:
+                break;
+        }
+    }
+
+    //根据条件查询数据
+    private void doQuery()
+    {
+        mProgressBar.show();
+        OkHttpUtils.post()//
+                .url(Constants.GET_TJCX_LIST)//
+                .addParams("AREA_NO", pqOrgNo)//
+                .addParams("USERB_YSXZ", watertNo)//
+                .addParams("USERB_SFFS", datadicValue)//
+                .build()//
+                .execute(new CommonCallback()
+                {
+                    @Override
+                    public void onNetworkError(boolean isNetwork, String error)
+                    {
+                        mProgressBar.dismiss();
+                        if (isNetwork)
+                        {
+                            ToastUtil.showShortToast(R.string.toast_network_anomalies);
+                        }
+                        else
+                        {
+                            ToastUtil.showShortToast(error);
+                        }
+
+                    }
+
+                    @Override
+                    public void onResponse(String datas)
+                    {
+                        mProgressBar.dismiss();
+                        if (!TextUtils.isEmpty(datas))
+                        {
+                            TJCXListBean bean = new Gson().fromJson(datas, TJCXListBean.class);
+                            List<ChaoBiaoTables> userbase = bean.userbase;
+                            datasList.clear();
+                            if (userbase != null && userbase.size() != 0)
+                            {
+                                datasList.addAll(userbase);
+                            }
+                            else
+                            {
+                                ToastUtil.showShortToast(R.string.toast_tjcx_list_not);
+                            }
+                            adapter.onDatasChanged(datasList);
+                        }
+                    }
+                });
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+    {
+        startQuery(datasList.get(position).getUSERB_KH());
+    }
+
+    private void startQuery(String USERB_KH)
+    {
+        if (TextUtils.isEmpty(USERB_KH))
+        {
+            ToastUtil.showShortToast(R.string.toast_tjcx_kh_abnormal);
+        }
+        Intent intent = new Intent(getActivity(), QueryDetailsActivity.class);
+        intent.putExtra("USERB_KH", USERB_KH);
+        startActivity(intent);
+    }
+}
