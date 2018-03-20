@@ -10,7 +10,7 @@ public class Constants
 //    public static String MAIN_URL = "http://192.168.199.149:8090/fh_jjwater_service/";// 测试环境
 //    public static String MAIN_URL = "http://218.85.93.130:8280/fh_jjwater_service/";// 正式环境
 //    public static String MAIN_URL = "http://218.207.198.197:1439/fh_jjwater_service/";// 晋江正式环境
-    public static String MAIN_URL = "http://218.207.198.160:1439/fh_jjwater_service/";// 晋江测式环境  lihm 1
+    public static String MAIN_URL = "http://218.207.198.160:1439/fh_jjwater_service/";// 晋江测式环境  hongcj   1
 //    http://218.207.198.160:1439/
     public static final String LOGIN_URL = MAIN_URL + "user/login";//登入URL
     public static final String UPDATE_PHONE = MAIN_URL + "userbase/updatePhone";//修改用户手机号

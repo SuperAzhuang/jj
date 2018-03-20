@@ -8,8 +8,8 @@ android {
         applicationId "com.feihua.jjcb.phone"
         minSdkVersion 15
         targetSdkVersion 22
-        versionCode 29
-        versionName '1.0.29'
+        versionCode 31
+        versionName '1.0.31'
     }
     buildTypes {
         release {

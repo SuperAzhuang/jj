@@ -120,15 +120,27 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener
                 .execute(new UserCallback()
                 {
                     @Override
-                    public void onNetworkError(boolean isNetwork, String error)
+                    public void onNetworkError(boolean isNetwork, final String error)
                     {
                         if (isNetwork)
                         {
-                            ToastUtil.showShortToast(R.string.toast_network_anomalies);
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    ToastUtil.showShortToast(R.string.toast_network_anomalies);
+                                }
+                            });
+
                         }
                         else
                         {
-                            ToastUtil.showShortToast(error);
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    ToastUtil.showShortToast(error);
+                                }
+                            });
+
                         }
                         mProgressBar.dismiss();
                     }

@@ -204,7 +204,23 @@ public class CBGLDetailsActivity extends BaseActivity implements View.OnClickLis
 
         if (adapter != null) {
             CBGLDetailsFragment fragment = (CBGLDetailsFragment) adapter.getItem(index);
-//            fragment.isBasictonTag();
+//            adapter = new CBGLDetailsViewPagerAdapter(fm, khDatas, volumeNo, this, mViewPager);
+            fragment.setUserbKh(volumeNo, khDatas.get(index), String.valueOf(khDatas.size()), index);
+            fragment.isBasictonTag(index);
+        }
+    }
+    protected void onStart() {
+        super.onStart();
+        if (adapter != null) {
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    CBGLDetailsFragment fragment = (CBGLDetailsFragment) adapter.getItem(index);
+//            adapter = new CBGLDetailsViewPagerAdapter(fm, khDatas, volumeNo, this, mViewPager);
+                    fragment.setUserbKh(volumeNo, khDatas.get(index), String.valueOf(khDatas.size()), index);
+                    fragment.isBasictonTag(index);
+                }
+            }, 800);
         }
     }
 

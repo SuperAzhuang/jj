@@ -4,12 +4,22 @@ import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Created by wcj on 2016-04-11.
  */
 public class AppUtils
 {
+    private static HashMap<Integer, String> map;
 
+    public static Map<Integer, String> getMap() {
+        if (map == null) {
+            map = new HashMap<Integer, String>();
+        }
+        return map;
+    }
     //版本名
     public static String getVersionName(Context context)
     {

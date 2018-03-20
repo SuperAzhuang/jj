@@ -41,7 +41,7 @@ public class CBGLDetailsViewPagerAdapter extends FragmentPagerAdapter
         if (list != null)
         {
             String userbKh = list.get(position);
-            fragment.setUserbKh(volumeNo, userbKh, String.valueOf(list.size()));
+            fragment.setUserbKh(volumeNo, userbKh, String.valueOf(list.size()),position);
             fragment.setOnNaviListener(new OnNaviListener()
             {
                 @Override
